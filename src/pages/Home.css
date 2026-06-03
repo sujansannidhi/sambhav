@@ -1,0 +1,281 @@
+/* ── HERO ──────────────────────────────────────────────────── */
+
+.home-hero {
+  min-height: 100svh;
+  background: var(--indigo-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--nav-h);
+  padding-bottom: 6rem;
+}
+
+/* Diya glow radial behind headline */
+.home-hero__diya-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -58%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(233, 162, 59, 0.12) 0%, rgba(199, 81, 38, 0.05) 40%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* Jali pattern overlay */
+.home-hero__jali {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(217, 183, 121, 0.04) 0px,
+    rgba(217, 183, 121, 0.04) 1px,
+    transparent 1px,
+    transparent 18px
+  ),
+  repeating-linear-gradient(
+    -45deg,
+    rgba(217, 183, 121, 0.04) 0px,
+    rgba(217, 183, 121, 0.04) 1px,
+    transparent 1px,
+    transparent 18px
+  );
+  pointer-events: none;
+}
+
+.home-hero__content {
+  position: relative;
+  z-index: 1;
+  padding-top: 3rem;
+}
+
+.home-hero__eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+.home-hero__title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.home-hero__devanagari {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--saffron);
+  opacity: 0.85;
+  margin-top: 0.85rem;
+  font-weight: 400;
+  align-self: flex-start;
+}
+
+.home-hero__h1 {
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  color: var(--cream);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.home-hero__sub {
+  max-width: 50ch;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: rgba(251, 246, 238, 0.72);
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+
+.home-hero__ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home-hero__scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba(251, 246, 238, 0.35);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-hero__scroll-cue svg {
+  width: 18px;
+  height: 18px;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0) }
+  50%       { transform: translateY(5px) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__scroll-cue svg { animation: none }
+}
+
+/* ── THE IDEA ─────────────────────────────────────────────── */
+
+.home-idea {
+  align-items: center;
+}
+
+.home-idea__heading {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  color: var(--indigo);
+  max-width: 22ch;
+}
+
+.home-idea__body {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+/* ── PROGRAM CARDS ────────────────────────────────────────── */
+
+.home-program-card--muted {
+  opacity: 0.7;
+}
+
+.home-program-card__img {
+  height: 200px;
+}
+
+.home-program-card__soon {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  opacity: 0.55;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── HOW WE WORK ─────────────────────────────────────────── */
+
+.home-step {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--cream);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.home-step:hover {
+  border-color: var(--gold-line);
+  box-shadow: var(--shadow-sm);
+}
+
+.home-step__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--saffron);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  opacity: 0.7;
+}
+
+.home-step__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--indigo);
+}
+
+.home-step__body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ── CTA BAND ────────────────────────────────────────────── */
+
+.home-cta-band {
+  background: var(--terra);
+  padding: clamp(4rem, 8vw, 6.5rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.03) 0px,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 18px
+  );
+}
+
+.home-cta-band__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.75rem;
+}
+
+.home-cta-band__heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #fff;
+  max-width: 20ch;
+}
+
+.home-cta-band__sub {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  margin-top: -1rem;
+}
+
+.home-cta-band__btn {
+  background: #fff;
+  color: var(--terra-deep);
+  padding: 1rem 2.5rem;
+  font-size: 1.0625rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.home-cta-band__btn:hover {
+  background: var(--cream);
+  color: var(--terra-deep);
+}
+
+/* Stagger hero elements on load */
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero .reveal {
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .home-hero .reveal-delay-1 { animation-delay: 0.12s }
+  .home-hero .reveal-delay-2 { animation-delay: 0.24s }
+  .home-hero .reveal-delay-3 { animation-delay: 0.36s }
+
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(24px) }
+    to   { opacity: 1; transform: none }
+  }
+
+  /* Hero elements don't use IntersectionObserver class override — they animate on mount */
+  .home-hero .reveal {
+    opacity: 0;
+    animation-fill-mode: both;
+  }
+}

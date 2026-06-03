@@ -1,0 +1,421 @@
+/* ── HERO ──────────────────────────────────────────────────── */
+
+.vidya-hero {
+  background: var(--indigo-2);
+  padding-top: calc(var(--nav-h) + 5rem);
+  padding-bottom: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.vidya-hero__diya-glow {
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(233, 162, 59, 0.1) 0%, rgba(199, 81, 38, 0.04) 45%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.vidya-hero__jali {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(217, 183, 121, 0.035) 0px,
+    rgba(217, 183, 121, 0.035) 1px,
+    transparent 1px,
+    transparent 18px
+  ),
+  repeating-linear-gradient(
+    -45deg,
+    rgba(217, 183, 121, 0.035) 0px,
+    rgba(217, 183, 121, 0.035) 1px,
+    transparent 1px,
+    transparent 18px
+  );
+  pointer-events: none;
+}
+
+.vidya-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.vidya-hero__lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.vidya-hero__parent,
+.vidya-hero__program {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  color: var(--cream);
+  opacity: 0.9;
+}
+
+.vidya-hero__dot {
+  color: var(--saffron);
+  font-size: 1.25rem;
+}
+
+.vidya-hero__program {
+  color: var(--saffron);
+}
+
+.vidya-hero__subtitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(217, 183, 121, 0.65);
+  margin-bottom: 1.75rem;
+}
+
+.vidya-hero__h1 {
+  font-size: clamp(2.1rem, 4.5vw, 3.5rem);
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  max-width: 22ch;
+}
+
+.vidya-hero__body {
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: rgba(251, 246, 238, 0.7);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  max-width: 52ch;
+}
+
+.vidya-hero__ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.vidya-hero__psa-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vidya-hero__psa-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Return-visit video */
+.vidya-hero__video-wrap {
+  margin-top: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.vidya-hero__video {
+  max-width: 680px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(217, 183, 121, 0.2);
+}
+
+.vidya-hero__video-poster {
+  aspect-ratio: 16/9;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vidya-hero__play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.vidya-hero__play-btn svg {
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+  transition: transform 0.2s;
+}
+
+.vidya-hero__play-btn:hover svg {
+  transform: scale(1.08);
+}
+
+/* Scroll cue */
+.vidya-scroll-cue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0;
+  background: var(--indigo-2);
+  color: rgba(217, 183, 121, 0.4);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.vidya-scroll-cue svg {
+  width: 18px;
+  height: 18px;
+  animation: bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) }
+  50%       { transform: translateY(5px) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vidya-scroll-cue svg { animation: none }
+}
+
+/* ── THE PROBLEM ─────────────────────────────────────────── */
+
+.vidya-problem {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+}
+
+.vidya-problem__text h2 {
+  margin-bottom: 1rem;
+  color: var(--indigo);
+}
+
+.vidya-problem__text p {
+  margin-bottom: 1.25rem;
+}
+
+.vidya-stat-inline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  background: rgba(233, 162, 59, 0.1);
+  border-left: 3px solid var(--saffron);
+  padding: 0.875rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.vidya-stat-inline__num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--saffron);
+  white-space: nowrap;
+}
+
+.vidya-stat-inline__label {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.vidya-problem__img {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  width: 100%;
+}
+
+/* ── KIT ─────────────────────────────────────────────────── */
+
+.vidya-kit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: start;
+}
+
+.vidya-kit__text h2 {
+  margin-bottom: 1rem;
+  color: var(--indigo);
+}
+
+.vidya-kit__text p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.vidya-kit__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vidya-kit__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--cream);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.vidya-kit__item svg {
+  width: 16px;
+  height: 16px;
+  color: var(--terra);
+  flex-shrink: 0;
+}
+
+.vidya-kit__item-name {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.vidya-kit__item-cost {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: rgba(217, 183, 121, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* ── TIERS ────────────────────────────────────────────────── */
+
+.vidya-tiers {
+  margin-bottom: 2rem;
+}
+
+.vidya-tier {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(217, 183, 121, 0.2);
+  border-radius: 14px;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.vidya-tier:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--saffron);
+}
+
+.vidya-tier__amount {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--saffron);
+  line-height: 1;
+}
+
+.vidya-tier__arrow {
+  font-size: 1.25rem;
+  color: var(--gold-line);
+  opacity: 0.6;
+}
+
+.vidya-tier__who {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+
+.vidya-tier__who2 {
+  font-size: 0.85rem;
+  color: rgba(251, 246, 238, 0.55);
+}
+
+.vidya-tier__btn {
+  margin-top: 0.75rem;
+  align-self: flex-start;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+.vidya-trust-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.vidya-trust-chip {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(217, 183, 121, 0.8);
+  background: rgba(217, 183, 121, 0.08);
+  border: 1px solid rgba(217, 183, 121, 0.2);
+  border-radius: 20px;
+  padding: 0.3rem 0.875rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── TRANSPARENCY ────────────────────────────────────────── */
+
+.vidya-transparency {
+  text-align: left;
+}
+
+.vidya-receipt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.vidya-receipt {
+  aspect-ratio: 3/4;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+/* ── FAQ ─────────────────────────────────────────────────── */
+
+.vidya-faq {
+  max-width: 740px;
+}
+
+/* ── DONATE SECTION ────────────────────────────────────────*/
+
+.vidya-donate-section {
+  background: linear-gradient(160deg, var(--paper) 0%, var(--cream) 100%);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .vidya-problem,
+  .vidya-kit {
+    grid-template-columns: 1fr;
+  }
+  .vidya-receipt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .vidya-receipt-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,152 @@
+.footer {
+  background: var(--indigo-2);
+  color: var(--cream);
+  padding-top: 0;
+}
+
+.footer__jali {
+  padding: 2.5rem 0 0;
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.25fr;
+  gap: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3.5rem;
+}
+
+/* Brand col */
+.footer__logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer__logo-devanagari {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--saffron);
+  opacity: 0.8;
+}
+
+.footer__logo-text {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+
+.footer__tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--gold-line);
+  margin-bottom: 0.85rem;
+  line-height: 1.3;
+}
+
+.footer__mission {
+  font-size: 0.875rem;
+  color: rgba(251, 246, 238, 0.55);
+  line-height: 1.65;
+  max-width: 28ch;
+}
+
+/* Cols */
+.footer__heading {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-line);
+  margin-bottom: 1rem;
+}
+
+.footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer__links a {
+  font-size: 0.9rem;
+  color: rgba(251, 246, 238, 0.65);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer__links a:hover {
+  color: var(--saffron);
+}
+
+.footer__soon {
+  font-size: 0.9rem;
+  color: rgba(251, 246, 238, 0.35);
+}
+
+.footer__soon em {
+  font-style: italic;
+  font-size: 0.78rem;
+  margin-left: 0.35rem;
+  color: rgba(217, 183, 121, 0.5);
+}
+
+/* Bottom strip */
+.footer__bottom {
+  border-top: 1px solid rgba(217, 183, 121, 0.12);
+  padding: 1.25rem 0;
+}
+
+.footer__bottom-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer__bottom p {
+  font-size: 0.8rem;
+  color: rgba(251, 246, 238, 0.4);
+}
+
+.footer__bottom a {
+  color: rgba(217, 183, 121, 0.6);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.footer__bottom a:hover {
+  color: var(--saffron);
+}
+
+@media (max-width: 1024px) {
+  .footer__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer__col--brand {
+    grid-column: 1 / -1;
+  }
+  .footer__mission {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+  }
+  .footer__col--brand {
+    grid-column: auto;
+  }
+  .footer__bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

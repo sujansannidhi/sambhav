@@ -1,0 +1,168 @@
+.psa-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(22, 33, 58, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: overlayIn 0.3s ease;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+.psa-modal {
+  width: 100%;
+  max-width: 900px;
+  background: var(--indigo-2);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+  animation: modalIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid rgba(217, 183, 121, 0.15);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(16px) }
+  to   { opacity: 1; transform: none }
+}
+
+.psa-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.75rem;
+}
+
+.psa-modal__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.psa-modal__close {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(251, 246, 238, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.psa-modal__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.psa-modal__close:hover {
+  color: var(--cream);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.psa-modal__close:focus-visible {
+  outline: 2px solid var(--saffron);
+  outline-offset: 2px;
+}
+
+.psa-modal__video-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+}
+
+.psa-modal__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.psa-modal__poster {
+  position: absolute;
+  inset: 0;
+}
+
+.psa-modal__poster--hidden {
+  display: none;
+}
+
+/* Show poster when reduced motion is preferred */
+@media (prefers-reduced-motion: reduce) {
+  .psa-modal__iframe {
+    display: none;
+  }
+  .psa-modal__poster--hidden {
+    display: block;
+  }
+}
+
+.psa-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem 1.125rem;
+  gap: 1rem;
+}
+
+.psa-modal__sound-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold-line);
+  background: none;
+  border: 1px solid rgba(217, 183, 121, 0.3);
+  border-radius: 6px;
+  padding: 0.45rem 0.875rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.psa-modal__sound-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.psa-modal__sound-btn:hover {
+  color: var(--saffron);
+  border-color: var(--saffron);
+}
+
+.psa-modal__sound-btn:focus-visible {
+  outline: 2px solid var(--saffron);
+  outline-offset: 2px;
+}
+
+.psa-modal__cta {
+  padding: 0.65rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .psa-modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .psa-modal__cta {
+    text-align: center;
+    justify-content: center;
+  }
+}
