@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom'
 import JaliDivider from '../JaliDivider/JaliDivider'
 import './Footer.css'
+
+const scrollTo = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+}
 
 export default function Footer() {
   return (
@@ -16,7 +19,7 @@ export default function Footer() {
           </div>
           <p className="footer__tagline">Making opportunity possible.</p>
           <p className="footer__mission">
-            Sambhav removes the small barriers that stop people from thriving —
+            Sambhav removes the small barriers that stop people from thriving,
             starting with the basics every student deserves.
           </p>
         </div>
@@ -25,43 +28,36 @@ export default function Footer() {
           <h4 className="footer__heading">Programs</h4>
           <ul className="footer__links">
             <li>
-              <Link to="/project-vidya">Project Vidya — Education</Link>
+              <a href="#mission" onClick={(e) => { e.preventDefault(); scrollTo('mission') }}>
+                Project Vidya: Education
+              </a>
             </li>
-            <li>
-              <span className="footer__soon">Project Jal — Clean Water <em>coming soon</em></span>
-            </li>
-            <li>
-              <span className="footer__soon">Project Swasth — Health <em>coming soon</em></span>
-            </li>
+            <li><span className="footer__soon">Project Jal: Clean Water <em>coming soon</em></span></li>
+            <li><span className="footer__soon">Project Swasth: Health <em>coming soon</em></span></li>
           </ul>
         </div>
 
         <div className="footer__col">
-          <h4 className="footer__heading">Quick links</h4>
+          <h4 className="footer__heading">Navigate</h4>
           <ul className="footer__links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">Our Story</Link></li>
-            <li><Link to="/impact">Impact & Transparency</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li>
+              <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
+                Home
+              </a>
+            </li>
+            <li><a href="#mission" onClick={(e) => { e.preventDefault(); scrollTo('mission') }}>Mission</a></li>
+            <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollTo('about') }}>About</a></li>
+            <li><a href="#places" onClick={(e) => { e.preventDefault(); scrollTo('places') }}>Places</a></li>
           </ul>
         </div>
 
         <div className="footer__col">
           <h4 className="footer__heading">Get in touch</h4>
           <ul className="footer__links">
+            <li><a href="mailto:sujan.sannidhi@gmail.com">sujan.sannidhi@gmail.com</a></li>
             <li>
-              <a href="mailto:hello@sambhav.org">
-                hello@sambhav.org
-              </a>
-            </li>
-            <li>
-              <a href="https://instagram.com/sambhavorg" target="_blank" rel="noopener noreferrer">
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com/sambhavorg" target="_blank" rel="noopener noreferrer">
-                Twitter / X
+              <a href="https://www.linkedin.com/in/sujan-sannidhi2010/" target="_blank" rel="noopener noreferrer">
+                LinkedIn
               </a>
             </li>
           </ul>
@@ -71,10 +67,7 @@ export default function Footer() {
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
           <p>© 2025 Sambhav. A student-led initiative.</p>
-          <p>
-            Donations processed securely.{' '}
-            <Link to="/contact">Privacy Policy</Link>
-          </p>
+          <p>Donations processed securely through GoFundMe.</p>
         </div>
       </div>
     </footer>

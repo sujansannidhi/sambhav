@@ -1,0 +1,95 @@
+/* ── Outer scroll container — 300vh gives 3 "pages" of scroll ── */
+.lh-outer {
+  position: relative;
+  height: 300vh;
+}
+
+/* ── Sticky viewport ─────────────────────────────────────────── */
+.lh-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--indigo-2);
+}
+
+/* ── Three.js canvas ─────────────────────────────────────────── */
+.lh-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Text content ────────────────────────────────────────────── */
+.lh-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  text-align: center;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  pointer-events: none;
+}
+
+.lh-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  opacity: 0.75;
+  margin-bottom: 1rem;
+}
+
+.lh-word {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 10rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  margin: 0 0 1.75rem;
+  text-shadow: 0 0 80px rgba(233, 162, 59, 0.3), 0 2px 40px rgba(0,0,0,0.5);
+}
+
+.lh-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lh-sub p {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: rgba(251, 246, 238, 0.68);
+  line-height: 1.6;
+}
+
+/* ── Section dots ────────────────────────────────────────────── */
+.lh-dots {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 2;
+}
+
+.lh-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(251, 246, 238, 0.25);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.lh-dot--active {
+  background: var(--saffron);
+  transform: scale(1.4);
+}

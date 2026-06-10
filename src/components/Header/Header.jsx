@@ -1,19 +1,20 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './Header.css'
 
 const NAV_LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/project-vidya', label: 'Project Vidya' },
-  { to: '/about', label: 'Our Story' },
-  { to: '/impact', label: 'Impact' },
+  { href: '#mission', label: 'Mission' },
+  { href: '#about', label: 'About' },
+  { href: '#places', label: 'Places' },
+  { href: '#donate', label: 'Donate' },
 ]
+
+const scrollTo = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const menuRef = useRef(null)
-  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -22,11 +23,7 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
   }, [menuOpen])
 
   useEffect(() => {
@@ -35,40 +32,45 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
-  const handleDonate = () => {
+  const handleNav = (e, href) => {
+    e.preventDefault()
     setMenuOpen(false)
-    navigate('/project-vidya#donate')
-    setTimeout(() => {
-      document.getElementById('donate')?.scrollIntoView({ behavior: 'smooth' })
-    }, 100)
+    scrollTo(href.replace('#', ''))
   }
 
   return (
     <header className={`header${scrolled ? ' header--scrolled' : ''}`} role="banner">
       <div className="container header__inner">
-        <Link to="/" className="header__logo" aria-label="Sambhav — Home">
+        <a
+          href="#"
+          className="header__logo"
+          aria-label="Sambhav — Home"
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+        >
           <span className="header__logo-devanagari">संभव</span>
           <span className="header__logo-text">Sambhav</span>
-        </Link>
+        </a>
 
         <nav className="header__nav" aria-label="Main navigation">
-          {NAV_LINKS.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/'}
-              className={({ isActive }) =>
-                `header__nav-link${isActive ? ' header__nav-link--active' : ''}`
-              }
+          {NAV_LINKS.map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="header__nav-link"
+              onClick={(e) => handleNav(e, href)}
             >
               {label}
-            </NavLink>
+            </a>
           ))}
         </nav>
 
-        <button className="btn btn--primary header__cta" onClick={handleDonate}>
+        <a
+          href="#donate"
+          className="btn btn--primary header__cta"
+          onClick={(e) => handleNav(e, '#donate')}
+        >
           Donate
-        </button>
+        </a>
 
         <button
           className={`header__hamburger${menuOpen ? ' header__hamburger--open' : ''}`}
@@ -83,33 +85,29 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       <div
         id="mobile-menu"
-        ref={menuRef}
         className={`header__mobile-menu${menuOpen ? ' header__mobile-menu--open' : ''}`}
         aria-hidden={!menuOpen}
       >
         <nav aria-label="Mobile navigation">
-          {NAV_LINKS.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/'}
-              className={({ isActive }) =>
-                `header__mobile-link${isActive ? ' header__mobile-link--active' : ''}`
-              }
-              onClick={() => setMenuOpen(false)}
+          {NAV_LINKS.map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="header__mobile-link"
+              onClick={(e) => handleNav(e, href)}
             >
               {label}
-            </NavLink>
+            </a>
           ))}
-          <button
+          <a
+            href="#donate"
             className="btn btn--primary header__mobile-cta"
-            onClick={handleDonate}
+            onClick={(e) => handleNav(e, '#donate')}
           >
             Donate
-          </button>
+          </a>
         </nav>
       </div>
     </header>

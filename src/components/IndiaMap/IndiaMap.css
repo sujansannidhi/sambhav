@@ -1,0 +1,21 @@
+.india-map-wrap {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  aspect-ratio: 460 / 520;
+}
+
+/* Pulsing ring animation for active marker */
+.marker-pulse {
+  animation: markerPulse 2s ease-out infinite;
+  transform-origin: center;
+}
+
+@keyframes markerPulse {
+  0%   { r: 8;  opacity: 0.9; }
+  100% { r: 22; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-pulse { animation: none; }
+}

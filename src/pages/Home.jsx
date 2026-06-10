@@ -1,170 +1,273 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react' // useRef kept for GoFundMeWidget
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal'
 import JaliDivider from '../components/JaliDivider/JaliDivider'
-import { IMG_CLASSROOM_HERO, IMG_WATER, IMG_HEALTH } from '../images'
+import IndiaMap from '../components/IndiaMap/IndiaMap'
+import LearningHero from '../components/LearningHero/LearningHero'
+import { IMG_CHILDREN_SMILING } from '../images'
 import './Home.css'
 
-const PROGRAMS = [
+const GOFUNDME_URL = 'https://gofund.me/4808bf77f'
+const GOFUNDME_SLUG = 'sambhav-bringing-education-opportunities-to-india'
+
+
+const PLACES = [
   {
-    tag: 'Active',
-    title: 'Project Vidya — Education',
-    body: 'School supplies delivered directly to students in under-resourced government schools across India. Every kit documented. Every rupee receipted.',
-    to: '/project-vidya',
-    active: true,
-    img: IMG_CLASSROOM_HERO,
-    imgAlt: 'Children learning in a classroom',
+    region: 'Narasaraopet',
+    area: 'Palnadu district, Andhra Pradesh',
+    focus: 'School supplies for students in rural government schools',
+    status: 'Active',
   },
   {
-    tag: 'Coming soon',
-    title: 'Project Jal — Clean Water',
-    body: 'Safe drinking water for communities without reliable access. Launching next.',
-    to: null,
-    active: false,
-    img: IMG_WATER,
-    imgAlt: 'Clean water',
-  },
-  {
-    tag: 'Coming soon',
-    title: 'Project Swasth — Health',
-    body: 'Basic medical supplies and preventative care for underserved families.',
-    to: null,
-    active: false,
-    img: IMG_HEALTH,
-    imgAlt: 'Healthcare',
+    region: 'Hyderabad',
+    area: 'Telangana',
+    focus: 'Educational materials for under-resourced communities on the city outskirts',
+    status: 'Upcoming',
   },
 ]
 
-const STEPS = [
-  {
-    num: '01',
-    title: 'Go in person',
-    body: 'Every purchase happens on the ground. No middle companies, no shipping from abroad.',
-  },
-  {
-    num: '02',
-    title: 'Buy wholesale, locally',
-    body: 'Local wholesale markets bring costs down 3–4× versus retail. Your money goes further.',
-  },
-  {
-    num: '03',
-    title: 'Deliver with a trusted partner',
-    body: 'A verified on-the-ground partner brings supplies directly to the school.',
-  },
-  {
-    num: '04',
-    title: 'Document every rupee',
-    body: 'Receipts, photos, and a letter from the school. Every time. No exceptions.',
-  },
-]
-
-const STATS = [
-  { number: '100+', label: 'Students supplied' },
-  { number: '3',    label: 'Schools reached' },
-  { number: '100%', label: 'Goes to the field' },
-  { number: '$0',   label: 'Overhead' },
-]
+function GoFundMeWidget() {
+  return (
+    <div className="gfm-widget-shell">
+      <iframe
+        src={`https://www.gofundme.com/f/${GOFUNDME_SLUG}/widget/medium/`}
+        title="Sambhav fundraiser on GoFundMe"
+        width="100%"
+        height="380"
+        frameBorder="0"
+        scrolling="no"
+        allow="payment"
+      />
+    </div>
+  )
+}
 
 export default function Home() {
-  const navigate = useNavigate()
-  const handleDonate = () => {
-    navigate('/project-vidya#donate')
-    setTimeout(() => document.getElementById('donate')?.scrollIntoView({ behavior: 'smooth' }), 150)
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="home-hero texture-overlay" aria-label="Hero">
-        <div className="home-hero__diya-glow" aria-hidden="true" />
-        <div className="home-hero__jali" aria-hidden="true" />
-        <div className="container home-hero__content">
-          <p className="eyebrow eyebrow--light home-hero__eyebrow reveal">
-            Making opportunity possible
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section className="hero" aria-label="Hero">
+        <div
+          className="hero__bg"
+          style={{ backgroundImage: `url(${IMG_CHILDREN_SMILING})` }}
+          aria-hidden="true"
+        />
+        <div className="hero__overlay" aria-hidden="true" />
+        <div className="hero__glow" aria-hidden="true" />
+
+        <div className="hero__title-stage">
+          <span className="hero__devanagari">संभव</span>
+          <h1 className="hero__h1">Sambhav</h1>
+        </div>
+
+        {/* static sub-content */}
+        <div className="container hero__content">
+          <p className="eyebrow eyebrow--light">Making opportunity possible</p>
+          <p className="hero__sub">
+            Opportunity shouldn't depend on where you're born. Sambhav removes
+            the small barriers that stop people from thriving, starting with
+            the basics every child deserves.
           </p>
-          <div className="home-hero__title-wrap">
-            <span className="home-hero__devanagari reveal reveal-delay-1">संभव</span>
-            <h1 className="home-hero__h1 reveal reveal-delay-1">Sambhav</h1>
-          </div>
-          <p className="home-hero__sub reveal reveal-delay-2">
-            Opportunity shouldn't depend on where you're born. Sambhav removes the
-            small barriers that stop people from thriving — starting with the basics.
-          </p>
-          <div className="home-hero__ctas reveal reveal-delay-3">
-            <button className="btn btn--primary" onClick={handleDonate}>
-              Support Project Vidya
+          <div className="hero__ctas">
+            <a
+              href={GOFUNDME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--primary"
+            >
+              Donate Now
+            </a>
+            <button className="btn btn--outline" onClick={() => scrollTo('mission')}>
+              Our Mission
             </button>
-            <Link to="/about" className="btn btn--outline">
-              Our Story
-            </Link>
           </div>
         </div>
-        <div className="home-hero__scroll-cue" aria-hidden="true">
+
+        <button
+          className="hero__scroll-cue"
+          aria-label="Scroll down"
+          onClick={() => scrollTo('mission')}
+        >
           <span>Scroll</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <line x1="12" y1="5" x2="12" y2="19" />
             <polyline points="19 12 12 19 5 12" />
           </svg>
+        </button>
+      </section>
+
+      {/* ── MISSION ──────────────────────────────────────── */}
+      <section id="mission" className="section section--cream">
+        <div className="container">
+          <ScrollReveal>
+            <p className="eyebrow">What we aim to achieve</p>
+            <h2 className="mission__heading">We find the gaps. We fill them.</h2>
+            <p className="mission__intro">
+              Around the world, millions of young people face barriers that have nothing
+              to do with their intelligence, determination, or potential. Some must leave
+              school to support their families. Others lack transportation, school
+              supplies, internet access, or safe learning environments. Many simply never
+              receive the opportunities they deserve.
+            </p>
+            <p className="mission__intro">
+              Sambhav, the name roughly translates to "possible", aims to bridge that
+              gap. There's a kid out there who has to give up their education to support
+              their family. There's a kid out there who can't make the commute to their
+              local school every day. Why should they suffer for the things they can't
+              control?
+            </p>
+          </ScrollReveal>
+
+          <div className="grid-3 mission__pillars">
+            {/* Active: Education */}
+            <ScrollReveal delay={1}>
+              <div className="pillar">
+                <span className="pillar__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" width="28" height="28">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>
+                </span>
+                <h3 className="pillar__title">Education</h3>
+                <p className="pillar__body">
+                  School supplies, notebooks, and learning materials delivered directly
+                  to students in under-resourced government schools. Every kit
+                  documented. Every rupee receipted.
+                </p>
+                <span className="pillar__label pillar__label--active">Active: Project Vidya</span>
+              </div>
+            </ScrollReveal>
+
+            {/* Blank slot 2 */}
+            <ScrollReveal delay={2}>
+              <div className="pillar pillar--blank">
+                <span className="pillar__blank-dot" />
+                <span className="pillar__blank-dot" />
+                <span className="pillar__blank-dot" />
+                <span className="pillar__label">More coming</span>
+              </div>
+            </ScrollReveal>
+
+            {/* Blank slot 3 */}
+            <ScrollReveal delay={3}>
+              <div className="pillar pillar--blank">
+                <span className="pillar__blank-dot" />
+                <span className="pillar__blank-dot" />
+                <span className="pillar__blank-dot" />
+                <span className="pillar__label">More coming</span>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* ── THE IDEA ─────────────────────────────────────────── */}
-      <section className="section section--cream">
-        <div className="container grid-2 home-idea">
+      {/* ── MAP ───────────────────────────────────────────── */}
+      <section className="section section--dark map-section">
+        <div className="container map-section__inner">
           <ScrollReveal>
-            <h2 className="home-idea__heading">
-              We start where the gap is smallest — and the impact is largest.
-            </h2>
+            <div className="map-section__text">
+              <p className="eyebrow eyebrow--light">Where we operate</p>
+              <h2 className="map-section__heading">Rooted in Andhra Pradesh.</h2>
+              <p className="map-section__body">
+                Sambhav begins where the need is clearest. Our first operations
+                are in Narasaraopet and Vijayawada, two communities in Andhra
+                Pradesh where access to quality learning materials makes a direct,
+                measurable difference.
+              </p>
+              <div className="map-legend">
+                <span className="map-legend__item map-legend__item--active">Active</span>
+                <span className="map-legend__item map-legend__item--upcoming">Upcoming</span>
+              </div>
+            </div>
           </ScrollReveal>
           <ScrollReveal delay={1}>
-            <p className="home-idea__body">
-              A missing notebook ends a child's schooling as surely as a closed door.
-              We find those gaps and fill them — directly, transparently, in person.
-              No overhead, no waste: every dollar you give buys supplies that reach
-              a student's hands.
-            </p>
-            <Link to="/about" className="btn btn--ghost" style={{ marginTop: '1.25rem' }}>
-              How we work →
-            </Link>
+            <IndiaMap />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── LEARN / EMPOWER / TRANSFORM ───────────────────── */}
+      <LearningHero />
+
+      <JaliDivider />
+
+      {/* ── ABOUT ─────────────────────────────────────────── */}
+      <section id="about" className="section section--cream">
+        <div className="container about-split">
+          <ScrollReveal>
+            <div className="about-photo-wrap">
+              <img
+                src="/sujan.jpg"
+                alt="Sujan Sannidhi"
+                className="about-photo"
+              />
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={1}>
+            <div className="about-text">
+              <p className="eyebrow">Who I am</p>
+              <h2 className="about-name">Sujan Sannidhi</h2>
+              <p className="about-bio">
+                I'm a rising junior at Independence High School. Education has always
+                been one of the most important parts of my life. Growing up in the
+                United Kingdom and later moving to the United States, I experienced
+                two very different education systems. That change was hard, but not
+                impossible, because of the people around me and the resources I had
+                to overcome any obstacles that came my way.
+              </p>
+              <p className="about-bio about-bio--second">
+                This isn't the same for everyone, and I want to fight to change that.
+                Not every student has that privilege. Your support can help provide
+                educational resources, expand access to learning opportunities, and
+                give students the tools they need to pursue their goals.
+              </p>
+              <a
+                href="https://www.linkedin.com/in/sujan-sannidhi2010/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--outline-dark about-linkedin"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17" aria-hidden="true">
+                  <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+                Connect on LinkedIn
+              </a>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
       <JaliDivider />
 
-      {/* ── PROGRAMS ─────────────────────────────────────────── */}
-      <section className="section section--cream">
+      {/* ── PLACES ────────────────────────────────────────── */}
+      <section id="places" className="section section--dark">
         <div className="container">
           <ScrollReveal>
-            <p className="eyebrow">Programs</p>
-            <h2 style={{ marginBottom: '2.5rem', maxWidth: '32ch' }}>
-              One focused mission at a time.
-            </h2>
+            <p className="eyebrow eyebrow--light">Where we work</p>
+            <h2 className="places__heading">Communities we're committed to.</h2>
+            <p className="places__intro">
+              Sambhav operates where the need is highest and the infrastructure
+              is thinnest. Every location is chosen based on documented need,
+              not convenience.
+            </p>
           </ScrollReveal>
-          <div className="grid-3">
-            {PROGRAMS.map((p, i) => (
-              <ScrollReveal key={p.title} delay={i + 1}>
-                <div className={`card home-program-card${!p.active ? ' home-program-card--muted' : ''}`}>
-                  <img
-                    className="card__img"
-                    src={p.img}
-                    alt={p.imgAlt}
-                    loading="lazy"
-                    style={!p.active ? { filter: 'saturate(0.4) opacity(0.7)' } : {}}
-                  />
-                  <div className="card__body">
-                    <p className="card__tag" style={!p.active ? { color: 'var(--ink-soft)', opacity: 0.55 } : {}}>
-                      {p.tag}
-                    </p>
-                    <h3 className="card__title">{p.title}</h3>
-                    <p className="card__text">{p.body}</p>
-                    {p.active ? (
-                      <Link to={p.to} className="btn btn--ghost">
-                        Explore →
-                      </Link>
-                    ) : (
-                      <span className="home-program-card__soon">Launching soon</span>
-                    )}
+          <div className="places__grid--two">
+            {PLACES.map((p, i) => (
+              <ScrollReveal key={p.region} delay={i + 1}>
+                <div className="place-card">
+                  <div className="place-card__top">
+                    <h3 className="place-card__region">{p.region}</h3>
+                    <span className={`place-card__status${p.status === 'Active' ? ' place-card__status--active' : ''}`}>
+                      {p.status}
+                    </span>
                   </div>
+                  <p className="place-card__area">{p.area}</p>
+                  <p className="place-card__focus">{p.focus}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -172,64 +275,29 @@ export default function Home() {
         </div>
       </section>
 
-      <JaliDivider />
-
-      {/* ── HOW WE WORK ─────────────────────────────────────── */}
-      <section className="section section--paper">
-        <div className="container">
+      {/* ── DONATE ────────────────────────────────────────── */}
+      <section id="donate" className="donate-section">
+        <div className="container donate-inner">
           <ScrollReveal>
-            <p className="eyebrow">How we work</p>
-            <h2 style={{ marginBottom: '3rem', maxWidth: '30ch' }}>
-              In-person. Wholesale. Documented.
-            </h2>
-          </ScrollReveal>
-          <div className="grid-4">
-            {STEPS.map((s, i) => (
-              <ScrollReveal key={s.num} delay={i + 1}>
-                <div className="home-step">
-                  <span className="home-step__num">{s.num}</span>
-                  <h3 className="home-step__title">{s.title}</h3>
-                  <p className="home-step__body">{s.body}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <JaliDivider />
-
-      {/* ── STATS ────────────────────────────────────────────── */}
-      <section className="section section--cream">
-        <div className="container">
-          <div className="grid-4">
-            {STATS.map((s, i) => (
-              <ScrollReveal key={s.label} delay={i + 1}>
-                <div className="stat-block">
-                  <div className="stat-block__number">{s.number}</div>
-                  <div className="stat-block__label">{s.label}</div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA BAND ─────────────────────────────────────────── */}
-      <section className="home-cta-band">
-        <div className="container home-cta-band__inner">
-          <ScrollReveal>
-            <h2 className="home-cta-band__heading">
-              Help a student take the first step.
-            </h2>
-            <p className="home-cta-band__sub">
-              $5 equips one child for an entire school year.
+            <p className="eyebrow eyebrow--light">Support Sambhav</p>
+            <h2 className="donate__heading">Help a student take the first step.</h2>
+            <p className="donate__sub">
+              Your support can help provide educational resources, expand access
+              to learning opportunities, and give students the tools they need
+              to pursue their goals. Every dollar goes directly to the field,
+              zero overhead, every rupee documented.
             </p>
+            <p className="donate__cta-tagline">Join us. Donate. Advocate.</p>
           </ScrollReveal>
           <ScrollReveal delay={1}>
-            <button className="btn btn--primary home-cta-band__btn" onClick={handleDonate}>
-              Donate to Project Vidya
-            </button>
+            <div className="donate__widget-wrap">
+              <GoFundMeWidget />
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={2}>
+            <p className="donate__trust">
+              Secure payments via GoFundMe. Every purchase receipted and photographed.
+            </p>
           </ScrollReveal>
         </div>
       </section>
