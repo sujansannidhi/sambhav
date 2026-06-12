@@ -9,11 +9,6 @@ const MARKERS = [
     coordinates: [80.0531, 16.2325],
     active: true,
   },
-  {
-    name: 'Vijayawada',
-    coordinates: [80.6480, 16.5062],
-    active: false,
-  },
 ]
 
 export default function IndiaMap() {

@@ -17,12 +17,6 @@ const PLACES = [
     focus: 'School supplies for students in rural government schools',
     status: 'Active',
   },
-  {
-    region: 'Hyderabad',
-    area: 'Telangana',
-    focus: 'Educational materials for under-resourced communities on the city outskirts',
-    status: 'Upcoming',
-  },
 ]
 
 function GoFundMeWidget() {
@@ -135,8 +129,7 @@ export default function Home() {
                 <h3 className="pillar__title">Education</h3>
                 <p className="pillar__body">
                   School supplies, notebooks, and learning materials delivered directly
-                  to students in under-resourced government schools. Every kit
-                  documented. Every rupee receipted.
+                  to students in under-resourced government schools.
                 </p>
                 <span className="pillar__label pillar__label--active">Active: Project Vidya</span>
               </div>
@@ -174,13 +167,12 @@ export default function Home() {
               <h2 className="map-section__heading">Rooted in Andhra Pradesh.</h2>
               <p className="map-section__body">
                 Sambhav begins where the need is clearest. Our first operations
-                are in Narasaraopet and Vijayawada, two communities in Andhra
+                are in Narasaraopet, a community in Andhra
                 Pradesh where access to quality learning materials makes a direct,
                 measurable difference.
               </p>
               <div className="map-legend">
                 <span className="map-legend__item map-legend__item--active">Active</span>
-                <span className="map-legend__item map-legend__item--upcoming">Upcoming</span>
               </div>
             </div>
           </ScrollReveal>
@@ -250,11 +242,6 @@ export default function Home() {
           <ScrollReveal>
             <p className="eyebrow eyebrow--light">Where we work</p>
             <h2 className="places__heading">Communities we're committed to.</h2>
-            <p className="places__intro">
-              Sambhav operates where the need is highest and the infrastructure
-              is thinnest. Every location is chosen based on documented need,
-              not convenience.
-            </p>
           </ScrollReveal>
           <div className="places__grid--two">
             {PLACES.map((p, i) => (
@@ -287,7 +274,6 @@ export default function Home() {
               to pursue their goals. Every dollar goes directly to the field,
               zero overhead, every rupee documented.
             </p>
-            <p className="donate__cta-tagline">Join us. Donate. Advocate.</p>
           </ScrollReveal>
           <ScrollReveal delay={1}>
             <div className="donate__widget-wrap">
