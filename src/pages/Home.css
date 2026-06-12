@@ -477,10 +477,41 @@
 }
 
 @media (max-width: 700px) {
-  .hero__h1 {
-    font-size: clamp(4rem, 18vw, 7rem);
+  /* ── Hero: drop absolute positioning, stack normally ── */
+  .hero {
+    justify-content: center;
+    padding-top: calc(var(--nav-h) + 2rem);
+    padding-bottom: 5rem;
+    gap: 2rem;
   }
 
+  .hero__title-stage {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    padding: 0 1rem;
+  }
+
+  .hero__h1 {
+    font-size: clamp(3.5rem, 16vw, 6rem);
+  }
+
+  .hero__devanagari {
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+  }
+
+  .hero__content {
+    padding: 0;
+  }
+
+  .hero__sub {
+    font-size: 0.95rem;
+    max-width: 36ch;
+  }
+
+  /* ── About ── */
   .about-split {
     grid-template-columns: 1fr;
   }
