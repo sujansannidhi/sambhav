@@ -131,7 +131,7 @@ export default function Home() {
                   School supplies, notebooks, and learning materials delivered directly
                   to students in under-resourced government schools.
                 </p>
-                <span className="pillar__label pillar__label--active">Active: Project Vidya</span>
+                <span className="pillar__label pillar__label--active">Active</span>
               </div>
             </ScrollReveal>
 

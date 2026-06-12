@@ -29,11 +29,9 @@ export default function Footer() {
           <ul className="footer__links">
             <li>
               <a href="#mission" onClick={(e) => { e.preventDefault(); scrollTo('mission') }}>
-                Project Vidya: Education
+                Education Project
               </a>
             </li>
-            <li><span className="footer__soon">Project Jal: Clean Water <em>coming soon</em></span></li>
-            <li><span className="footer__soon">Project Swasth: Health <em>coming soon</em></span></li>
           </ul>
         </div>
 
