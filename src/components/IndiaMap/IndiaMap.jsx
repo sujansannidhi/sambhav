@@ -8,6 +8,25 @@ const MARKERS = [
     name: 'Narasaraopet',
     coordinates: [80.0531, 16.2325],
     active: true,
+    labelX: 0,
+    labelY: -18,
+    labelAnchor: 'middle',
+  },
+  {
+    name: 'Ammanabrolu',
+    coordinates: [80.0287, 15.8705],
+    active: true,
+    labelX: -12,
+    labelY: 4,
+    labelAnchor: 'end',
+  },
+  {
+    name: 'Chirala',
+    coordinates: [80.3542, 15.8292],
+    active: true,
+    labelX: 12,
+    labelY: 4,
+    labelAnchor: 'start',
   },
 ]
 
@@ -42,23 +61,21 @@ export default function IndiaMap() {
           }
         </Geographies>
 
-        {MARKERS.map(({ name, coordinates, active }) => (
+        {MARKERS.map(({ name, coordinates, active, labelX, labelY, labelAnchor }) => (
           <Marker key={name} coordinates={coordinates}>
-            {/* Pulse ring */}
             {active && (
               <circle r={14} fill="none" stroke="#e9a23b" strokeWidth={1.5} className="marker-pulse" />
             )}
-            {/* Dot */}
             <circle
               r={active ? 7 : 5}
               fill={active ? '#e9a23b' : '#c75126'}
               stroke="#fbf6ee"
               strokeWidth={1.5}
             />
-            {/* Label */}
             <text
-              textAnchor="middle"
-              y={-14}
+              textAnchor={labelAnchor}
+              x={labelX}
+              y={labelY}
               style={{
                 fontFamily: 'Mukta, sans-serif',
                 fontSize: 10,
