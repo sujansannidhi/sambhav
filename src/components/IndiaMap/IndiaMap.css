@@ -12,8 +12,8 @@
 }
 
 @keyframes markerPulse {
-  0%   { r: 8;  opacity: 0.9; }
-  100% { r: 22; opacity: 0; }
+  0%   { r: 4;  opacity: 0.9; }
+  100% { r: 12; opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

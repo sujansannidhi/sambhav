@@ -9,7 +9,7 @@ const MARKERS = [
     coordinates: [80.0531, 16.2325],
     active: true,
     labelX: 0,
-    labelY: -18,
+    labelY: -12,
     labelAnchor: 'middle',
   },
   {
@@ -64,13 +64,13 @@ export default function IndiaMap() {
         {MARKERS.map(({ name, coordinates, active, labelX, labelY, labelAnchor }) => (
           <Marker key={name} coordinates={coordinates}>
             {active && (
-              <circle r={14} fill="none" stroke="#e9a23b" strokeWidth={1.5} className="marker-pulse" />
+              <circle r={7} fill="none" stroke="#e9a23b" strokeWidth={1} className="marker-pulse" />
             )}
             <circle
-              r={active ? 7 : 5}
+              r={active ? 4 : 3}
               fill={active ? '#e9a23b' : '#c75126'}
               stroke="#fbf6ee"
-              strokeWidth={1.5}
+              strokeWidth={1}
             />
             <text
               textAnchor={labelAnchor}
