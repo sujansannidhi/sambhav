@@ -3,25 +3,79 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#16213A" />
 
-    <!-- SEO -->
-    <title>Sambhav — Making Opportunity Possible</title>
-    <meta name="description" content="Sambhav removes the small barriers that stop people from thriving. Project Vidya delivers school supplies directly to students in under-resourced schools in India." />
-    <meta property="og:title" content="Sambhav — Making Opportunity Possible" />
-    <meta property="og:description" content="A student-led initiative. Project Vidya equips children with school supplies — bought in person, delivered directly, receipts shared." />
-    <meta property="og:image" content="/og-image.jpg" />
+    <!-- SEO. Interior pages set their own title via useDocumentTitle as
+         "Page name | Sambhav". This is the homepage title. -->
+    <title>Sambhav</title>
+    <meta
+      name="description"
+      content="Sambhav is a student-led initiative removing the small barriers that stop students from thriving. Learning Kits delivers school supplies directly to students in under-resourced government schools in Andhra Pradesh."
+    />
+    <link rel="canonical" href="https://sambhav.foundation/" />
+    <meta property="og:site_name" content="Sambhav" />
+    <meta property="og:title" content="Sambhav" />
+    <meta
+      property="og:description"
+      content="A student-led initiative. Learning Kits equips students with school supplies bought in person at local wholesale prices, delivered directly, with receipts shared."
+    />
+    <!-- og:image must be an absolute URL: relative paths do not resolve for
+         social scrapers. Generated from the brand mark into public/og-image.jpg.
+         [CONFIG] Replace the domain here and in og:url if it changes. -->
+    <meta property="og:image" content="https://sambhav.foundation/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Sambhav banyan tree mark beside the Sambhav wordmark." />
+    <meta property="og:url" content="https://sambhav.foundation/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Favicon placeholder -->
+    <!-- Favicons. All generated from the mark alone, never the lockup: a
+         wordmark is illegible at 16px. Sizes 16/32/48 use a simplified canopy so
+         the tab icon still reads at small sizes. -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Google Fonts: Fraunces (display) + Mukta (body) -->
+    <!-- Google Fonts: Fraunces (display) + Mukta (body).
+         Loaded without blocking render. The stylesheet arrives as media="print"
+         (so it is not applied and does not block first paint) then flips to
+         media="all" on load. The families already use display=swap, so text is
+         visible in the fallback face immediately either way. This removed about
+         1.2s of render blocking. The <noscript> copy keeps the fonts working
+         with JavaScript disabled. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Mukta:wght@300;400;500;600&display=swap"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Mukta:wght@300;400;500;600&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Mukta:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Preload the first hero frame. It is the largest contentful paint element,
+         so it must not wait for React to mount and must never be lazy loaded.
+         Keep this in sync with HERO[0] in src/data/media.js. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/media/hero-school-gate-1440.avif"
+      type="image/avif"
+      imagesrcset="/media/hero-school-gate-960.avif 960w, /media/hero-school-gate-1440.avif 1440w, /media/hero-school-gate-2000.avif 2000w"
+      imagesizes="100vw"
+      fetchpriority="high"
     />
   </head>
   <body>

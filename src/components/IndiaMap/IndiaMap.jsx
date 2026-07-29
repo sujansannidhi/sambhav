@@ -1,3 +1,10 @@
+/* SUPERSEDED by src/components/ImpactMap/, which is what /impact now renders.
+ * Kept only because it is still a working country level marker map. It is not
+ * imported anywhere. Chirala was removed from MARKERS below: it is not one of
+ * the places in the organisation's record and never should have been listed.
+ * Note also that this file's Ammanabrolu coordinate was about 32 km off; the
+ * corrected position lives in src/data/geo.js.
+ */
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 import './IndiaMap.css'
 
@@ -19,14 +26,6 @@ const MARKERS = [
     labelX: -12,
     labelY: 4,
     labelAnchor: 'end',
-  },
-  {
-    name: 'Chirala',
-    coordinates: [80.3542, 15.8292],
-    active: true,
-    labelX: 12,
-    labelY: 4,
-    labelAnchor: 'start',
   },
 ]
 

@@ -1,0 +1,87 @@
+.counters {
+  background: var(--cream);
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
+}
+
+.counters__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.6vw, 2.75rem);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0.5rem 0 3rem;
+  letter-spacing: -0.015em;
+  max-width: 20ch;
+}
+
+.counters__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.counter {
+  border-top: 2px solid var(--gold-line);
+  padding-top: 1.25rem;
+}
+
+.counter__value {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--terra);
+  letter-spacing: -0.03em;
+  margin: 0;
+  /* Tabular figures stop the number jittering as it counts. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* "over" / "about" sit small and quiet so the qualifier is visible but the
+   number still reads first. An approximate figure must never look exact. */
+.counter__prefix {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.35rem;
+}
+
+.counter__label {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0.85rem 0 0.3rem;
+}
+
+.counter__asof {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.counter__detail {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 34ch;
+}
+
+.counters__note {
+  margin-top: 2.75rem;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+@media (max-width: 860px) {
+  .counters__grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}

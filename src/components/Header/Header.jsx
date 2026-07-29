@@ -1,15 +1,194 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import markColour from '../../assets/brand/sambhav-mark.svg'
+import markLight from '../../assets/brand/sambhav-mark-light.svg'
 import './Header.css'
 
 const NAV_LINKS = [
-  { href: '#mission', label: 'Mission' },
-  { href: '#about', label: 'About' },
-  { href: '#places', label: 'Places' },
-  { href: '#donate', label: 'Donate' },
+  { to: '/mission', label: 'Mission' },
+  { to: '/impact', label: 'Impact' },
+  { to: '/about', label: 'About' },
+  { to: '/partnerships', label: 'Partnerships' },
 ]
 
-const scrollTo = (id) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+/* Campaigns. Only Learning Kits is running. Teaching and Access appear here
+ * marked as planned rather than hidden: they are not links, cannot be focused,
+ * and are flagged aria-disabled so assistive tech announces them as unavailable.
+ */
+const CAMPAIGNS = [
+  { to: '/campaigns/learning-kits', label: 'Learning Kits', status: 'active' },
+  { label: 'Teaching', status: 'planned' },
+  { label: 'Access', status: 'planned' },
+]
+
+const WORDMARK = 'Sambhav'
+const ANIM_KEY = 'sambhav:wordmark-played'
+
+function Wordmark() {
+  const [animate, setAnimate] = useState(false)
+
+  /* Plays once per session on first load, never on route change. */
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced || sessionStorage.getItem(ANIM_KEY) === '1') return
+    sessionStorage.setItem(ANIM_KEY, '1')
+    setAnimate(true)
+  }, [])
+
+  return (
+    /* Real text in the DOM. The per letter spans are presentational, so the
+       parent carries the accessible name and the spans are hidden from
+       assistive technology. */
+    <span
+      className={`header__wordmark${animate ? ' header__wordmark--animate' : ''}`}
+      aria-label={WORDMARK}
+    >
+      {WORDMARK.split('').map((ch, i) => (
+        <span
+          key={i}
+          className="header__wordmark-letter"
+          aria-hidden="true"
+          style={{ animationDelay: `${i * 40}ms` }}
+        >
+          {ch}
+        </span>
+      ))}
+    </span>
+  )
+}
+
+function CampaignsMenu({ onNavigate }) {
+  const [open, setOpen] = useState(false)
+  const triggerRef = useRef(null)
+  const menuRef = useRef(null)
+  const wrapRef = useRef(null)
+  const { pathname } = useLocation()
+
+  const focusable = () => Array.from(menuRef.current?.querySelectorAll('a[href]') || [])
+
+  const close = useCallback((returnFocus = false) => {
+    setOpen(false)
+    if (returnFocus) triggerRef.current?.focus()
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        close(true)
+      }
+    }
+    const onPointer = (e) => {
+      if (!wrapRef.current?.contains(e.target)) close()
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+    }
+  }, [open, close])
+
+  const onTriggerKey = (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      setOpen(true)
+      requestAnimationFrame(() => focusable()[0]?.focus())
+    }
+  }
+
+  /* Arrow keys walk the real links only. Planned items are not anchors, so they
+     are skipped for free. */
+  const onMenuKey = (e) => {
+    const items = focusable()
+    const i = items.indexOf(document.activeElement)
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      items[(i + 1) % items.length]?.focus()
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      if (i <= 0) close(true)
+      else items[i - 1].focus()
+    } else if (e.key === 'Home') {
+      e.preventDefault()
+      items[0]?.focus()
+    } else if (e.key === 'End') {
+      e.preventDefault()
+      items[items.length - 1]?.focus()
+    } else if (e.key === 'Tab') {
+      close()
+    }
+  }
+
+  const isActive = pathname.startsWith('/campaigns')
+
+  return (
+    <div className="header__menu" ref={wrapRef}>
+      <button
+        ref={triggerRef}
+        type="button"
+        className={`header__nav-link header__menu-trigger${isActive ? ' header__nav-link--active' : ''}`}
+        aria-expanded={open}
+        aria-controls="campaigns-menu"
+        aria-haspopup="true"
+        /* On touch the first tap opens the menu instead of navigating. */
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={onTriggerKey}
+      >
+        Campaigns
+        <svg
+          className="header__menu-caret"
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+
+      <div
+        id="campaigns-menu"
+        ref={menuRef}
+        className={`header__dropdown${open ? ' header__dropdown--open' : ''}`}
+        onKeyDown={onMenuKey}
+        hidden={!open}
+      >
+        <ul>
+          {CAMPAIGNS.map((c) =>
+            c.status === 'active' ? (
+              <li key={c.label}>
+                <NavLink
+                  to={c.to}
+                  className="header__dropdown-item"
+                  onClick={() => {
+                    close()
+                    onNavigate?.()
+                  }}
+                >
+                  {c.label}
+                </NavLink>
+              </li>
+            ) : (
+              <li key={c.label}>
+                <span
+                  className="header__dropdown-item header__dropdown-item--planned"
+                  aria-disabled="true"
+                >
+                  {c.label}
+                  <span className="header__planned-tag">Planned</span>
+                </span>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+    </div>
+  )
 }
 
 export default function Header() {
@@ -18,6 +197,7 @@ export default function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -32,45 +212,44 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
-  const handleNav = (e, href) => {
-    e.preventDefault()
-    setMenuOpen(false)
-    scrollTo(href.replace('#', ''))
-  }
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <header className={`header${scrolled ? ' header--scrolled' : ''}`} role="banner">
+      {/* Scrim: at scroll top the header floats over the hero photograph, which
+          now changes every few seconds. This gradient gives every control a
+          stable dark backing without reading as a solid bar, and fades out once
+          the header takes its own cream background. */}
+      <div className="header__scrim" aria-hidden="true" />
+
       <div className="container header__inner">
-        <a
-          href="#"
-          className="header__logo"
-          aria-label="Sambhav — Home"
-          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-        >
-          <span className="header__logo-devanagari">संभव</span>
-          <span className="header__logo-text">Sambhav</span>
-        </a>
+        <Link to="/" className="header__logo" aria-label="Sambhav, home" onClick={closeMenu}>
+          <span className="header__mark" aria-hidden="true">
+            <img src={markColour} alt="" className="header__mark-img header__mark-img--colour" width="34" height="24" />
+            <img src={markLight} alt="" className="header__mark-img header__mark-img--light" width="34" height="24" />
+          </span>
+          <Wordmark />
+        </Link>
 
         <nav className="header__nav" aria-label="Main navigation">
-          {NAV_LINKS.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="header__nav-link"
-              onClick={(e) => handleNav(e, href)}
-            >
+          <CampaignsMenu onNavigate={closeMenu} />
+          {NAV_LINKS.map(({ to, label }) => (
+            <NavLink key={to} to={to} className="header__nav-link" onClick={closeMenu}>
               {label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
-        <a
-          href="#donate"
-          className="btn btn--primary header__cta"
-          onClick={(e) => handleNav(e, '#donate')}
-        >
+        {/* Donate used .btn--outline-dark, which is indigo text on the indigo
+            hero at scroll top: a contrast ratio of 1.08, effectively invisible.
+            It now uses a header specific variant that is cream over the hero and
+            indigo once the header goes cream. */}
+        <Link to="/donate" className="btn header__cta header__cta--secondary" onClick={closeMenu}>
           Donate
-        </a>
+        </Link>
+        <Link to="/start" className="btn btn--primary header__cta" onClick={closeMenu}>
+          Start a Chapter
+        </Link>
 
         <button
           className={`header__hamburger${menuOpen ? ' header__hamburger--open' : ''}`}
@@ -91,23 +270,24 @@ export default function Header() {
         aria-hidden={!menuOpen}
       >
         <nav aria-label="Mobile navigation">
-          {NAV_LINKS.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="header__mobile-link"
-              onClick={(e) => handleNav(e, href)}
-            >
+          <NavLink to="/campaigns/learning-kits" className="header__mobile-link" onClick={closeMenu}>
+            Learning Kits
+          </NavLink>
+          <span className="header__mobile-link header__mobile-link--planned" aria-disabled="true">
+            Teaching <span className="header__planned-tag">Planned</span>
+          </span>
+          <span className="header__mobile-link header__mobile-link--planned" aria-disabled="true">
+            Access <span className="header__planned-tag">Planned</span>
+          </span>
+          {NAV_LINKS.map(({ to, label }) => (
+            <NavLink key={to} to={to} className="header__mobile-link" onClick={closeMenu}>
               {label}
-            </a>
+            </NavLink>
           ))}
-          <a
-            href="#donate"
-            className="btn btn--primary header__mobile-cta"
-            onClick={(e) => handleNav(e, '#donate')}
-          >
-            Donate
-          </a>
+          <Link to="/donate" className="header__mobile-link" onClick={closeMenu}>Donate</Link>
+          <Link to="/start" className="btn btn--primary header__mobile-cta" onClick={closeMenu}>
+            Start a Chapter
+          </Link>
         </nav>
       </div>
     </header>

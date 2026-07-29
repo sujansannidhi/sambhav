@@ -6,21 +6,24 @@ import './LearningHero.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+/* The three goals, as the organisation defines them in "Sambhav Proof Of
+ * Concept", page 2. The wording of each line is drawn from that section.
+ * Animation timing and typography are unchanged from the previous version. */
 const SECTIONS = [
   {
-    word: 'LEARN',
-    line1: 'Every child deserves access to knowledge,',
-    line2: 'regardless of where they were born.',
+    word: 'EQUIP',
+    line1: 'We put the physical tools of learning',
+    line2: 'into a student\'s hands.',
   },
   {
-    word: 'EMPOWER',
-    line1: 'We provide the tools, resources, and support',
-    line2: 'to unlock each student\'s full potential.',
+    word: 'ENABLE',
+    line1: 'Volunteer teaching, exam preparation, and support',
+    line2: 'for the students the system leaves behind.',
   },
   {
-    word: 'TRANSFORM',
-    line1: 'Together we build communities where',
-    line2: 'every dream has a chance to become real.',
+    word: 'SUSTAIN',
+    line1: 'Not one good year, but consistency:',
+    line2: 'one student staying in school, year by year.',
   },
 ]
 

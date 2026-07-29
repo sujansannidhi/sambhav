@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { IMG_CLASSROOM_HERO } from '../../images'
 import './PSAModal.css'
 
 const PSA_VIDEO_ID = 'PLACEHOLDER_VIDEO_ID' // [CONFIG: replace with your YouTube video ID]
@@ -54,19 +53,19 @@ export default function PSAModal({ onClose }) {
       ref={overlayRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Project Vidya — Our story"
+      aria-label="Learning Kits, our story"
       onClick={handleOverlayClick}
     >
       <div className="psa-modal">
         <div className="psa-modal__header">
           <div className="psa-modal__meta">
-            <span className="eyebrow eyebrow--light">Sambhav · Project Vidya</span>
+            <span className="eyebrow eyebrow--light">Sambhav · Learning Kits</span>
           </div>
           <button
             ref={closeRef}
             className="psa-modal__close"
             onClick={onClose}
-            aria-label="Close video and continue to Project Vidya"
+            aria-label="Close video and continue to Learning Kits"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -80,13 +79,13 @@ export default function PSAModal({ onClose }) {
           <iframe
             className="psa-modal__iframe"
             src={videoSrc}
-            title="Project Vidya — Our story"
+            title="Learning Kits, our story"
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
           />
           {/* Poster shown if video blocked by prefers-reduced-motion */}
           <div className="psa-modal__poster psa-modal__poster--hidden" aria-hidden="true">
-            <img src={IMG_CLASSROOM_HERO} alt="Project Vidya — students in classroom" style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block' }} />
+            <img src="/media/promo-poster-1440.jpg" alt="Students in a classroom holding up newly received textbooks." style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block' }} />
           </div>
         </div>
 
@@ -118,7 +117,7 @@ export default function PSAModal({ onClose }) {
           </button>
 
           <button className="btn btn--primary psa-modal__cta" onClick={onClose}>
-            Continue to Project Vidya →
+            Continue to Learning Kits →
           </button>
         </div>
       </div>

@@ -24,11 +24,14 @@
   margin-bottom: 0.75rem;
 }
 
-.footer__logo-devanagari {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  color: var(--saffron);
-  opacity: 0.8;
+/* Brand mark. Replaced the Devanagari rendering of Sambhav, which was removed
+   from the header, footer and hero. Telugu, not Devanagari, is the script that
+   fits the field work in Andhra Pradesh if a second script is ever added. */
+.footer__logo-mark {
+  width: 40px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .footer__logo-text {
@@ -112,7 +115,8 @@
 
 .footer__bottom p {
   font-size: 0.8rem;
-  color: rgba(251, 246, 238, 0.4);
+  /* 0.4 alpha measured 3.52:1 against --indigo-2. 0.62 gives 6.5:1. */
+  color: rgba(251, 246, 238, 0.62);
 }
 
 .footer__bottom a {

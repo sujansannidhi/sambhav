@@ -1,0 +1,57 @@
+/* Hero background rotation.
+ *
+ * The container carries opacity 0.45, the exact value the old single .hero__bg
+ * used, so the overlay treatment in Home.css is unchanged. Do not tune this by
+ * eye: it is paired with the four stop gradient in .hero__overlay.
+ */
+.hero-carousel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.45;
+  z-index: 0;
+}
+
+.hero-carousel__frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  will-change: opacity;
+}
+
+.hero-carousel__frame--active {
+  opacity: 1;
+}
+
+.hero-carousel__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* object-position comes per image from the media manifest, so a frame whose
+     subject sits off centre still survives the narrow crop on phones. */
+}
+
+/* Ken Burns: a slow push across the hold so a still photograph does not read as
+   frozen. Runs only on the visible frame, and only for one hold period. */
+.hero-carousel__frame--active img {
+  animation: hero-kenburns 6000ms linear forwards;
+}
+
+@keyframes hero-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* Reduced motion: one static frame, no crossfade, no drift.
+   The component also stops its timer, so this is belt and braces. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel__frame {
+    transition: none;
+  }
+  .hero-carousel__frame--active img {
+    animation: none;
+    transform: none;
+  }
+}

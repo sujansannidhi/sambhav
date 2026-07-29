@@ -1,0 +1,253 @@
+/* ── Animated sequence ──────────────────────────────────────────────────────
+   300vh of scroll for the whole two act sequence. The pin is position: sticky,
+   so the browser owns the scrolling and the wheel never gets intercepted.
+   Scrolling straight through at full speed just plays the sequence quickly.
+*/
+.imap {
+  position: relative;
+  height: 300vh;
+  background: var(--indigo-2);
+}
+
+.imap__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.imap__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.imap__svg {
+  width: min(90vw, 1000px);
+  height: auto;
+  max-height: 82vh;
+  overflow: visible;
+}
+
+.imap__state {
+  fill: rgba(35, 48, 77, 0.55);
+  stroke: rgba(217, 183, 121, 0.22);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.imap__boundary {
+  fill: rgba(199, 81, 38, 0.10);
+  stroke: var(--terra);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.imap__ring {
+  fill: rgba(199, 81, 38, 0.10);
+  stroke: var(--terra);
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.imap__dot {
+  fill: var(--saffron);
+  stroke: var(--cream);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Photographs scattered around the outline, offset from one another. */
+.imap__photos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.imap__photo {
+  position: absolute;
+  margin: 0;
+  width: clamp(150px, 17vw, 240px);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  will-change: transform, opacity;
+}
+
+.imap__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.imap__photo--0 { top: 12%;  left: 6%; }
+.imap__photo--1 { bottom: 14%; left: 12%; }
+.imap__photo--2 { top: 18%;  right: 7%; }
+.imap__photo--3 { bottom: 12%; right: 13%; }
+
+.imap__label {
+  position: absolute;
+  right: clamp(1.5rem, 6vw, 5rem);
+  bottom: clamp(3rem, 10vh, 7rem);
+  max-width: 30ch;
+  text-align: right;
+  color: var(--cream);
+  pointer-events: none;
+}
+
+.imap__place {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.imap__district {
+  color: var(--saffron);
+  font-size: 0.9375rem;
+  margin: 0.35rem 0 0.75rem;
+}
+
+.imap__schools {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.imap__note {
+  font-size: 0.8125rem;
+  color: rgba(251, 246, 238, 0.55);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.imap__title {
+  position: absolute;
+  top: clamp(5rem, 14vh, 9rem);
+  left: clamp(1.5rem, 6vw, 5rem);
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+  margin: 0;
+  pointer-events: none;
+}
+
+.imap__title .eyebrow {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.imap__credit {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: rgba(251, 246, 238, 0.42);
+  margin: 0;
+}
+
+/* ── Static two card version (phones + reduced motion) ────────────────────── */
+.imap-static {
+  background: var(--indigo-2);
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
+}
+
+.imap-static__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.75rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0.5rem 0 2.5rem;
+  letter-spacing: -0.015em;
+}
+
+.imap-static__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.imap-card {
+  background: rgba(35, 48, 77, 0.45);
+  border: 1px solid rgba(217, 183, 121, 0.16);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.imap-card__map svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.imap__state--static {
+  fill: rgba(22, 33, 58, 0.85);
+}
+
+.imap__boundary--static {
+  stroke-width: 2;
+}
+
+.imap-card__place {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin: 1rem 0 0.25rem;
+}
+
+.imap-card__district {
+  color: var(--saffron);
+  font-size: 0.875rem;
+  margin: 0 0 0.6rem;
+}
+
+.imap-card__schools {
+  color: var(--cream);
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+
+.imap-card__note {
+  font-size: 0.8125rem;
+  color: rgba(251, 246, 238, 0.55);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.imap-card__photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.6rem;
+}
+
+.imap-card__photos img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.imap__credit--static {
+  position: static;
+  transform: none;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 767px) {
+  .imap-static__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,16 +1,23 @@
 import { useState } from 'react'
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import './Contact.css'
 
 const HOW_OPTIONS = [
-  { value: 'donate',    label: 'Donate' },
-  { value: 'volunteer', label: 'Volunteer' },
+  { value: 'chapter',   label: 'Start a chapter' },
   { value: 'partner',   label: 'Partner school or organization' },
+  { value: 'donate',    label: 'Donate / support' },
+  { value: 'volunteer', label: 'Volunteer' },
   { value: 'spread',    label: 'Spread the word' },
   { value: 'other',     label: 'Other / just saying hi' },
 ]
 
 export default function Contact() {
+  useDocumentTitle(
+    'Contact | Sambhav',
+    'Get in touch with Sambhav. Partner a school, ask a question, or find another way to help.'
+  )
+
   const [name, setName]     = useState('')
   const [email, setEmail]   = useState('')
   const [how, setHow]       = useState('')
@@ -34,7 +41,7 @@ export default function Contact() {
     if (!validate()) return
     setLoading(true)
 
-    /* [CONFIG: replace with your form handler — Formspree, Netlify Forms, etc.]
+    /* [CONFIG: replace with your form handler, e.g. Formspree or Netlify Forms]
      *
      * Example with Formspree:
      *   await fetch('https://formspree.io/f/YOUR_FORM_ID', {
@@ -60,7 +67,7 @@ export default function Contact() {
             <h1 className="contact-hero__h1">We'd love to hear from you.</h1>
             <p className="contact-hero__sub">
               Whether you want to donate, volunteer, connect a school, or just ask
-              a question — reach out.
+              a question, reach out.
             </p>
           </ScrollReveal>
         </div>
@@ -172,10 +179,10 @@ export default function Contact() {
               <div className="contact-info__item">
                 <h4>Follow along</h4>
                 <a href="https://instagram.com/sambhavorg" target="_blank" rel="noopener noreferrer">
-                  Instagram — @sambhavorg
+                  Instagram, @sambhavorg
                 </a>
                 <a href="https://twitter.com/sambhavorg" target="_blank" rel="noopener noreferrer">
-                  Twitter / X — @sambhavorg
+                  Twitter / X, @sambhavorg
                 </a>
               </div>
               <div className="contact-info__item">

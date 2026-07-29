@@ -1,0 +1,14 @@
+{
+  "name": "Sambhav",
+  "short_name": "Sambhav",
+  "description": "A student-led initiative delivering school supplies to under-resourced government schools in Andhra Pradesh.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF6EE",
+  "theme_color": "#16213A",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

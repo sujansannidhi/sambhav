@@ -1,0 +1,290 @@
+/* Learning Kits page.
+ *
+ * Layout only. Colours, type and spacing all come from the tokens in
+ * index.css and the section classes in Home.css. Body copy is capped at 68
+ * characters per line via the `ch` widths below.
+ */
+
+.lk-hero {
+  background: var(--indigo-2);
+  color: var(--cream);
+  padding: calc(var(--nav-h) + 5rem) 0 clamp(3rem, 8vw, 5.5rem);
+}
+
+.lk-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.lk-hero__lede {
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  color: rgba(251, 246, 238, 0.78);
+  max-width: 68ch;
+}
+
+.lk-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  margin: 0.5rem 0 1.5rem;
+  max-width: 22ch;
+}
+
+.lk-h2--light { color: var(--cream); }
+
+.lk-prose {
+  max-width: 68ch;
+}
+
+.lk-prose p {
+  margin: 0 0 1.1rem;
+  line-height: 1.7;
+}
+
+.lk-prose--tight { margin-bottom: 2.5rem; }
+.lk-prose--light p { color: rgba(251, 246, 238, 0.75); }
+
+/* Visible, deliberately ugly. A gap in the source should be obvious in review,
+   not blend into the page. */
+.lk-needs-input {
+  background: rgba(233, 162, 59, 0.14);
+  border-left: 3px solid var(--saffron);
+  padding: 0.85rem 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.lk-needs-input--light { color: rgba(251, 246, 238, 0.8); }
+
+/* Full width photographic breaks between sections. */
+.lk-break {
+  margin: 0;
+  height: clamp(240px, 42vh, 460px);
+  overflow: hidden;
+}
+
+.lk-break picture,
+.lk-break img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Steps: alternating image and text ────────────────────────────────────── */
+.lk-steps {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.lk-step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.lk-step--flip .lk-step__media { order: 2; }
+
+.lk-step__media picture,
+.lk-step__media img {
+  display: block;
+  width: 100%;
+  height: clamp(220px, 32vw, 380px);
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.lk-step__n {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--terra);
+  margin-bottom: 0.5rem;
+}
+
+.lk-step__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+  max-width: 24ch;
+}
+
+.lk-step__text p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 68ch;
+}
+
+/* ── Reserved video slots ─────────────────────────────────────────────────── */
+.lk-video-slot {
+  display: none; /* nothing to show yet; findable in the DOM by data-slot */
+}
+
+/* ── Kit table ────────────────────────────────────────────────────────────── */
+.lk-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.lk-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.lk-table__caption {
+  caption-side: top;
+  text-align: left;
+  padding: 1rem 1.25rem 0;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.lk-table th,
+.lk-table td {
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.lk-table thead th {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.lk-table tbody th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.lk-table tbody tr:last-child th,
+.lk-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.lk-table__note {
+  margin: 1rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  max-width: 68ch;
+}
+
+.lk-kit-photos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.lk-kit-photos img {
+  width: 100%;
+  height: clamp(220px, 30vw, 360px);
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+}
+
+/* ── Schools ──────────────────────────────────────────────────────────────── */
+.lk-schools {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+.lk-schools__town {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--gold-line);
+}
+
+.lk-schools ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lk-schools li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.lk-map-link {
+  margin-top: 2.5rem;
+  display: inline-flex;
+}
+
+/* ── What is next ─────────────────────────────────────────────────────────── */
+.lk-next {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+.lk-next__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 1rem;
+}
+
+.lk-next ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.lk-next li {
+  margin-bottom: 0.65rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 60ch;
+}
+
+@media (max-width: 860px) {
+  .lk-step,
+  .lk-kit-photos,
+  .lk-schools,
+  .lk-next {
+    grid-template-columns: 1fr;
+  }
+  .lk-step--flip .lk-step__media { order: 0; }
+}
