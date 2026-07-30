@@ -10,10 +10,14 @@ import './ImpactCounters.css'
  *   page 4, "June 23rd & 24th"      -> the as-of date on every figure
  *   page 4, "12 / SCHOOLS SERVED"   -> schools
  *   page 4, "1200 + / STUDENTS EQUIPPED" -> students who received a kit
- *   page 4, "=$3.50 / COST PER STUDENT"  -> cost, stated as approximate
+ *   page 4 to 5, the two town headings -> towns reached
  *
- * The document writes 1200+ and =$3.50, so both are shown as approximate rather
- * than hardened into exact numbers.
+ * The document writes 1200+, so that figure is shown as "over 1,200" rather than
+ * hardened into an exact number.
+ *
+ * The cost per student figure (=$3.50 on page 4) was removed from this band at
+ * the client's request. It is still stated in prose on the Mission and About
+ * pages, where it has room for the context that it is a wholesale unit price.
  *
  * The labels are deliberately long. "Students who received a kit" is not the
  * same claim as "students enrolled at the schools we reached", and the site must
@@ -36,12 +40,10 @@ const FIGURES = [
     detail: 'Counted as kits handed to a student, not as enrolment at the schools we visited.',
   },
   {
-    value: 3.5,
-    display: '$3.50',
-    prefix: 'about ',
-    decimals: 2,
-    label: 'cost per student kit',
-    detail: 'Bought at local wholesale prices in Andhra Pradesh.',
+    value: 2,
+    display: '2',
+    label: 'towns reached',
+    detail: 'Narasaraopet in Palnadu district and Ammanabrolu in Prakasam district.',
   },
 ]
 
@@ -124,7 +126,7 @@ export default function ImpactCounters() {
       <div className="container">
         <p className="eyebrow">What has happened so far</p>
         <h2 id="counters-heading" className="counters__heading">
-          The first delivery run, in numbers.
+          Impact in numbers.
         </h2>
         <div className="counters__grid">
           {FIGURES.map((fig) => (

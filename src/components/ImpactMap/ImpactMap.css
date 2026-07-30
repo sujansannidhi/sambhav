@@ -152,7 +152,8 @@
   transform: translateX(-50%);
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
-  color: rgba(251, 246, 238, 0.42);
+  /* 0.42 alpha measured 3.73:1 on --indigo-2. 0.68 gives 7.6:1. */
+  color: rgba(251, 246, 238, 0.68);
   margin: 0;
 }
 

@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom'
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal'
 import JaliDivider from '../../components/JaliDivider/JaliDivider'
 import Picture from '../../components/Picture/Picture'
+import MediaCarousel from '../../components/MediaCarousel/MediaCarousel'
+import Handover from '../../components/Handover/Handover'
 import ImpactCounters from '../../components/ImpactCounters/ImpactCounters'
 import useDocumentTitle from '../../hooks/useDocumentTitle'
-import { BY_SLUG } from '../../data/media'
+import { BY_SLUG, REQUISITIONS, GRADE_DOCS } from '../../data/media'
 import '../Home.css'
 import './LearningKits.css'
 
@@ -23,15 +25,16 @@ const STEPS = [
     n: '01',
     title: 'Teachers say what they need',
     body:
-      'We went to each school in person and asked what they were short of. The requests came from the teachers, who know which class runs out of what and when.',
-    img: 'kit-request',
+      'We went to each school in person and asked what they were short of. The requests came back handwritten, class by class, from the people who know which grade runs out of what and when. Those sheets are below, exactly as we received them.',
+    gallery: 'requisition',
   },
   {
     n: '02',
     title: 'Needs are separated grade by grade',
     body:
-      'What every school wanted was noted down and split out grade by grade, so a Class 2 kit and a Class 9 kit are not the same box with a different label.',
+      'Each school\'s list was split out grade by grade, so a Class 2 kit and a Class 9 kit are not the same box with a different label. The school kept its own record of what went to which class, and how many sets.',
     img: 'kit-grade-banding',
+    extras: 'gradedoc',
   },
   {
     n: '03',
@@ -44,15 +47,8 @@ const STEPS = [
     n: '04',
     title: 'Packed by hand',
     body:
-      'A team of volunteers spent the day packaging every component by hand. Packing took about five hours.',
+      'A team of volunteers spent the day packaging every component by hand. Packing took about five hours before anything moved.',
     img: 'kit-packing',
-  },
-  {
-    n: '05',
-    title: 'Carried to the school and handed over',
-    body:
-      'The boxes went into an auto-rickshaw and through the streets to the schools. Distribution ran about sixteen hours across two days.',
-    img: 'kit-delivery',
   },
 ]
 
@@ -93,26 +89,10 @@ const SCHOOLS = {
   ],
 }
 
-/* Source: page 5, "Here are our short term goals" and "Long Term Goals". */
-const NEXT = {
-  short: [
-    'Build a working website and Instagram page',
-    'Partner with the Nobel Institute',
-    'Develop a team of five board directors',
-    'Work out three direct ways of fundraising',
-  ],
-  long: [
-    'File and receive 501(c) status',
-    'Reach more than 50 schools',
-    'Open five chapters in different places',
-    'Develop three or more campaigns for children who are out of education',
-  ],
-}
-
 export default function LearningKits() {
   useDocumentTitle(
     'Learning Kits | Sambhav',
-    'Learning Kits puts the physical tools of learning into a student’s hands. Twelve schools in Andhra Pradesh, over 1,200 students, at about $3.50 a kit.'
+    'Learning Kits puts the physical tools of learning into a student\'s hands. Twelve schools across Narasaraopet and Ammanabrolu, over 1,200 students, in June 2026.'
   )
 
   return (
@@ -173,38 +153,56 @@ export default function LearningKits() {
         <div className="container">
           <ScrollReveal>
             <p className="eyebrow">How a kit is built</p>
-            <h2 className="lk-h2">Five steps, all of them in person.</h2>
+            <h2 className="lk-h2">Four steps before it ever reaches a student.</h2>
           </ScrollReveal>
 
           <ol className="lk-steps">
-            {STEPS.map((s, i) => (
-              <ScrollReveal key={s.n} delay={(i % 2) + 1}>
-                <li className={`lk-step${i % 2 ? ' lk-step--flip' : ''}`}>
-                  <div className="lk-step__media">
-                    <Picture img={BY_SLUG[s.img]} sizes="(max-width: 860px) 100vw, 46vw" />
-                  </div>
+            {/* ScrollReveal renders the <li> itself via `as`: wrapping it in a
+                div would put a non-<li> directly inside the <ol>. */}
+            {STEPS.map((step, i) => (
+              <ScrollReveal
+                key={step.n}
+                as="li"
+                delay={(i % 2) + 1}
+                className={
+                  step.gallery
+                    ? 'lk-step lk-step--wide'
+                    : `lk-step${i % 2 ? ' lk-step--flip' : ''}`
+                }
+              >
+                  {/* A step either leads with one photograph, or, where the
+                      evidence is a stack of documents, with a scrollable strip. */}
+                  {step.gallery ? null : (
+                    <div className="lk-step__media">
+                      <Picture img={BY_SLUG[step.img]} sizes="(max-width: 860px) 100vw, 46vw" />
+                      {step.extras && (
+                        <div className="lk-step__extras">
+                          {GRADE_DOCS.map((d) => (
+                            <Picture key={d.slug} img={d} sizes="(max-width: 860px) 45vw, 22vw" />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <div className="lk-step__text">
-                    <span className="lk-step__n">{s.n}</span>
-                    <h3 className="lk-step__title">{s.title}</h3>
-                    <p>{s.body}</p>
+                    <span className="lk-step__n">{step.n}</span>
+                    <h3 className="lk-step__title">{step.title}</h3>
+                    <p>{step.body}</p>
+                    {step.gallery === 'requisition' && (
+                      <MediaCarousel
+                        items={REQUISITIONS}
+                        label="Teacher requisition sheets"
+                      />
+                    )}
                   </div>
-                </li>
               </ScrollReveal>
             ))}
           </ol>
         </div>
       </section>
 
-      {/*
-        VIDEO SLOT A (after "How a kit is built").
-        Reserved for a short clip of packing or the auto-rickshaw run.
-        Empty on purpose: no reviewed, cleared clip exists yet. The raw field
-        footage in sambhav_media/ is .MOV (iPhone HEVC) and is not web playable
-        without transcoding. Drop a <PromoVideo>-style component here when a
-        clip is ready.
-        [NEEDS INPUT: video for slot A]
-      */}
-      <div className="lk-video-slot" data-slot="A" aria-hidden="true" />
+      {/* ── THE HANDOVER ───────────────────────────────────── */}
+      <Handover />
 
       <JaliDivider />
 
@@ -333,35 +331,6 @@ export default function LearningKits() {
       {/* ── 7. THE NUMBERS ─────────────────────────────────── */}
       <ImpactCounters />
 
-      {/* ── 8. WHAT IS NEXT ────────────────────────────────── */}
-      <section className="section section--cream">
-        <div className="container">
-          <ScrollReveal>
-            <p className="eyebrow">What is next</p>
-            <h2 className="lk-h2">More schools. More towns. Same method.</h2>
-            <p className="lk-prose lk-prose--tight">
-              These are the commitments the organisation has actually written down.
-              Nothing here is a projection.
-            </p>
-          </ScrollReveal>
-
-          <div className="lk-next">
-            <ScrollReveal delay={1}>
-              <div className="lk-next__col">
-                <h3 className="lk-next__title">Short term</h3>
-                <ul>{NEXT.short.map((g) => <li key={g}>{g}</li>)}</ul>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={2}>
-              <div className="lk-next__col">
-                <h3 className="lk-next__title">Long term</h3>
-                <ul>{NEXT.long.map((g) => <li key={g}>{g}</li>)}</ul>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA ────────────────────────────────────────────── */}
       <section className="section section--indigo">
         <div className="container" style={{ textAlign: 'center' }}>
@@ -377,8 +346,8 @@ export default function LearningKits() {
                 marginInline: 'auto',
               }}
             >
-              A chapter runs the same five steps: ask, band by grade, buy local,
-              pack, deliver.
+              A chapter runs the same way: ask the teachers, band by grade, buy
+              local, pack by hand, deliver in person.
             </p>
             <Link to="/start" className="btn btn--primary">Start a Chapter</Link>
           </ScrollReveal>

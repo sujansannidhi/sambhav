@@ -114,7 +114,9 @@
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--terra);
+  /* --terra is 4.21:1 on cream, just under the 4.5:1 minimum at 14px.
+     --terra-deep is 6.27:1 and reads the same at this size. */
+  color: var(--terra-deep);
   margin-bottom: 0.5rem;
 }
 
@@ -132,6 +134,37 @@
   line-height: 1.7;
   color: var(--ink-soft);
   max-width: 68ch;
+}
+
+
+/* A step whose evidence is a stack of documents runs full width with the strip
+   below the copy, instead of the two column image-and-text layout. */
+.lk-step--wide {
+  grid-template-columns: 1fr;
+}
+
+.lk-step--wide .lk-step__text {
+  max-width: none;
+}
+
+/* The school's own distribution record, sitting under the kit photograph. */
+.lk-step__extras {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.lk-step__extras picture,
+.lk-step__extras img {
+  display: block;
+  width: 100%;
+  height: clamp(150px, 17vw, 210px);
+  object-fit: cover;
+  object-position: top;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
 }
 
 /* ── Reserved video slots ─────────────────────────────────────────────────── */

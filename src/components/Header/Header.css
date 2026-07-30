@@ -329,13 +329,18 @@ a.header__dropdown-item:focus-visible {
   flex-direction: column;
   padding: 2rem 1.5rem;
   transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  /* visibility, not just transform: a translated-off-screen panel keeps its
+     links in the tab order, which made the aria-hidden container contain
+     focusable descendants. visibility: hidden removes them properly. */
+  visibility: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s;
   z-index: 99;
   overflow-y: auto;
 }
 
 .header__mobile-menu--open {
   transform: none;
+  visibility: visible;
 }
 
 .header__mobile-menu nav {

@@ -20,6 +20,12 @@ export default function HeroCarousel() {
   const [index, setIndex] = useState(0)
   const [ready, setReady] = useState(false)
   const [reduced, setReduced] = useState(false)
+  /* Which frames have been allowed to start loading. With 13 frames, mounting
+     them all at once would pull megabytes the viewer may never see, so we keep a
+     sliding window: frame 0 up front, then each frame's successor as its turn
+     approaches. Once a frame is in the set it stays, so going round again is
+     instant. */
+  const [allowed, setAllowed] = useState(() => new Set([0]))
 
   /* Watch the motion preference live: a user can change it mid-session. */
   useEffect(() => {
@@ -49,14 +55,23 @@ export default function HeroCarousel() {
     return () => clearInterval(id)
   }, [reduced, ready])
 
+  /* Open the window to the next frame as soon as the current one is showing,
+     giving it a full 6 second hold to arrive before it is needed. */
+  useEffect(() => {
+    if (reduced || !ready) return
+    const next = (index + 1) % HERO.length
+    setAllowed((prev) => (prev.has(next) ? prev : new Set(prev).add(next)))
+  }, [index, ready, reduced])
+
   const frames = reduced ? HERO.slice(0, 1) : HERO
 
   return (
     <div className="hero-carousel" aria-hidden="true">
       {frames.map((img, i) => {
         const active = i === index
-        /* Frame 0 is eager. The rest stay out of the network queue until ready. */
-        const shouldLoad = i === 0 || ready
+        /* Frame 0 is eager. The rest wait for the load event AND their turn in
+           the sliding window above. */
+        const shouldLoad = i === 0 || (ready && allowed.has(i))
         return (
           <div
             key={img.slug}

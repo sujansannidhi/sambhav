@@ -1,0 +1,105 @@
+.mcar {
+  position: relative;
+  margin-top: 2rem;
+}
+
+.mcar__track {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.25rem 0.25rem 1.25rem;
+  /* Room for the focus ring, which would otherwise be clipped by overflow. */
+  margin: -0.25rem;
+  scrollbar-width: thin;
+}
+
+.mcar__track:focus-visible {
+  outline: 3px solid var(--saffron);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.mcar__item {
+  flex: 0 0 auto;
+  width: clamp(210px, 26vw, 320px);
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+.mcar__item picture,
+.mcar__item img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 32vw, 400px);
+  object-fit: cover;
+  /* Documents are photographed on a desk: a light card behind them reads as a
+     page rather than a floating crop. */
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.mcar__caption {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.mcar__controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.mcar__btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--indigo);
+  background: transparent;
+  color: var(--indigo);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, opacity 0.18s;
+}
+
+.mcar__btn:hover:not(:disabled) {
+  background: var(--indigo);
+  color: var(--cream);
+}
+
+.mcar__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.mcar__btn:focus-visible {
+  outline: 3px solid var(--saffron);
+  outline-offset: 2px;
+}
+
+/* On a dark section the controls and captions have to invert. */
+.section--dark .mcar__caption,
+.imap-static .mcar__caption {
+  color: rgba(251, 246, 238, 0.7);
+}
+
+.section--dark .mcar__btn {
+  border-color: rgba(251, 246, 238, 0.6);
+  color: var(--cream);
+}
+
+.section--dark .mcar__btn:hover:not(:disabled) {
+  background: var(--cream);
+  color: var(--indigo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcar__track {
+    scroll-behavior: auto;
+  }
+}

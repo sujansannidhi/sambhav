@@ -65,18 +65,26 @@
       />
     </noscript>
 
-    <!-- Preload the first hero frame. It is the largest contentful paint element,
-         so it must not wait for React to mount and must never be lazy loaded.
-         Keep this in sync with HERO[0] in src/data/media.js. -->
-    <link
-      rel="preload"
-      as="image"
-      href="/media/hero-school-gate-1440.avif"
-      type="image/avif"
-      imagesrcset="/media/hero-school-gate-960.avif 960w, /media/hero-school-gate-1440.avif 1440w, /media/hero-school-gate-2000.avif 2000w"
-      imagesizes="100vw"
-      fetchpriority="high"
-    />
+    <!-- Preload the first hero frame so it does not wait for React to mount.
+         This HTML shell is shared by every route, and the hero only exists on
+         the homepage, so a static <link> would waste the download on every other
+         page. This runs synchronously in <head>, so the fetch still starts
+         before the parser reaches the bundle.
+         Keep the paths in sync with HERO[0] in src/data/media.js. -->
+    <script>
+      if (location.pathname === '/') {
+        var heroPreload = document.createElement('link')
+        heroPreload.rel = 'preload'
+        heroPreload.as = 'image'
+        heroPreload.type = 'image/avif'
+        heroPreload.href = '/media/hero-01-courtyard-960.avif'
+        heroPreload.imageSrcset =
+          '/media/hero-01-courtyard-480.avif 480w, /media/hero-01-courtyard-960.avif 960w'
+        heroPreload.imageSizes = '100vw'
+        heroPreload.fetchPriority = 'high'
+        document.head.appendChild(heroPreload)
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
