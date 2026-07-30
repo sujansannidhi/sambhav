@@ -1,6 +1,10 @@
 .mcar {
   position: relative;
   margin-top: 2rem;
+  /* Belt and braces alongside min-width:0 on the parent column: the carousel
+     must never be wider than the column it sits in. */
+  min-width: 0;
+  max-width: 100%;
 }
 
 .mcar__track {
@@ -8,15 +12,14 @@
   gap: 1.25rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 0.25rem 0.25rem 1.25rem;
-  /* Room for the focus ring, which would otherwise be clipped by overflow. */
-  margin: -0.25rem;
+  padding: 0 0 1.25rem;
   scrollbar-width: thin;
 }
 
 .mcar__track:focus-visible {
+  /* Inset, because an outset ring would be clipped by overflow-x: auto. */
   outline: 3px solid var(--saffron);
-  outline-offset: 4px;
+  outline-offset: -3px;
   border-radius: var(--radius-sm);
 }
 
@@ -27,18 +30,30 @@
   scroll-snap-align: start;
 }
 
-.mcar__item picture,
+.mcar__item picture {
+  display: block;
+}
+
 .mcar__item img {
   display: block;
   width: 100%;
-  height: clamp(260px, 32vw, 400px);
-  object-fit: cover;
-  /* Documents are photographed on a desk: a light card behind them reads as a
-     page rather than a floating crop. */
-  background: var(--paper);
-  border: 1px solid var(--line);
+  height: clamp(300px, 34vw, 420px);
+  /* contain, not cover: these are documents meant to be read, and cover was
+     slicing the top and bottom off every sheet. The paper ground makes the
+     letterboxing read as a page rather than a gap. */
+  object-fit: contain;
+  /* Transparent, not white: the sheets are photographed at different aspect
+     ratios, so `contain` leaves bands above and below the landscape ones. On the
+     cream page those bands simply disappear, where a white card would frame
+     them as empty space. The photographs carry their own desk background, so
+     they still read as objects rather than floating cutouts. */
+  background: transparent;
   border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
+}
+
+.mcar__item {
+  display: flex;
+  flex-direction: column;
 }
 
 .mcar__caption {
@@ -46,6 +61,13 @@
   font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--ink-soft);
+  /* Captions vary from one line to four. Clamping keeps every card the same
+     height so the strip does not look ragged. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
 }
 
 .mcar__controls {

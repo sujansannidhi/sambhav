@@ -173,11 +173,11 @@ export default function Contact() {
           <ScrollReveal delay={2} className="contact-info-col">
             <div className="contact-info">
               <div className="contact-info__item">
-                <h4>Email</h4>
+                <h3>Email</h3>
                 <a href="mailto:hello@sambhav.org">hello@sambhav.org</a>
               </div>
               <div className="contact-info__item">
-                <h4>Follow along</h4>
+                <h3>Follow along</h3>
                 <a href="https://instagram.com/sambhavorg" target="_blank" rel="noopener noreferrer">
                   Instagram, @sambhavorg
                 </a>
@@ -186,7 +186,7 @@ export default function Contact() {
                 </a>
               </div>
               <div className="contact-info__item">
-                <h4>Partner schools</h4>
+                <h3>Partner schools</h3>
                 <p>
                   If you represent a school or NGO in India and would like to be
                   considered for a supply campaign, please reach out via email or

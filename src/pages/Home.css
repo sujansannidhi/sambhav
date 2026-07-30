@@ -450,7 +450,8 @@
 
 .donate__trust {
   font-size: 0.8rem;
-  color: rgba(251, 246, 238, 0.35);
+  /* 0.35 alpha measured 2.84:1 on --indigo. 0.66 gives 6.0:1. */
+  color: rgba(251, 246, 238, 0.66);
   letter-spacing: 0.01em;
 }
 

@@ -96,6 +96,15 @@
   align-items: center;
 }
 
+/* Grid items default to min-width: auto, which means they refuse to shrink
+   below their content's intrinsic width. A horizontally scrolling child is very
+   wide, so without this the column blows straight past the container and the
+   carousel bleeds off the side of the page instead of scrolling inside it. */
+.lk-step__media,
+.lk-step__text {
+  min-width: 0;
+}
+
 .lk-step--flip .lk-step__media { order: 2; }
 
 .lk-step__media picture,

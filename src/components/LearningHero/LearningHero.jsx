@@ -45,6 +45,9 @@ export default function LearningHero() {
   const subRef    = useRef(null)
 
   const [sectionIdx, setSectionIdx] = useState(0)
+  /* Null until we know. False means we render the scene-free version: the words
+     and their lines still appear, just over a flat indigo ground. */
+  const [webgl, setWebgl] = useState(null)
   const threeRefs = useRef({
     scene: null, camera: null, renderer: null,
     stars: [], mountains: [], animId: null,
@@ -55,22 +58,47 @@ export default function LearningHero() {
   useEffect(() => {
     const R = threeRefs.current
 
-    R.scene = new THREE.Scene()
-    R.scene.fog = new THREE.FogExp2(C.indigo2, 0.0004)
+    /* A WebGL context is not guaranteed: it can be blocked by a GPU blocklist,
+       switched off in settings, or simply unavailable in a VM or on older
+       hardware. three.js throws when it cannot get one, and an uncaught throw in
+       an effect takes the whole React tree down with it, which used to blank the
+       entire homepage. Check first, and treat any failure as "no scene". */
+    let ok = false
+    try {
+      const probe = document.createElement('canvas')
+      ok = !!(window.WebGLRenderingContext &&
+        (probe.getContext('webgl2') || probe.getContext('webgl') || probe.getContext('experimental-webgl')))
+    } catch {
+      ok = false
+    }
+    if (!ok) {
+      setWebgl(false)
+      return
+    }
 
-    R.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000)
-    R.camera.position.set(0, 25, 80)
+    try {
+      R.scene = new THREE.Scene()
+      R.scene.fog = new THREE.FogExp2(C.indigo2, 0.0004)
 
-    R.renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true, alpha: false })
-    R.renderer.setSize(window.innerWidth, window.innerHeight)
-    R.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    R.renderer.setClearColor(C.indigo2)
-    R.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    R.renderer.toneMappingExposure = 0.8
+      R.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000)
+      R.camera.position.set(0, 25, 80)
 
-    buildStars(R)
-    buildMountains(R)
-    buildHorizonGlow(R)
+      R.renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true, alpha: false })
+      R.renderer.setSize(window.innerWidth, window.innerHeight)
+      R.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      R.renderer.setClearColor(C.indigo2)
+      R.renderer.toneMapping = THREE.ACESFilmicToneMapping
+      R.renderer.toneMappingExposure = 0.8
+
+      buildStars(R)
+      buildMountains(R)
+      buildHorizonGlow(R)
+    } catch (err) {
+      console.warn('LearningHero: falling back to the scene-free version.', err)
+      setWebgl(false)
+      return
+    }
+    setWebgl(true)
 
     const animate = () => {
       R.animId = requestAnimationFrame(animate)
@@ -145,9 +173,11 @@ export default function LearningHero() {
   const s = SECTIONS[sectionIdx]
 
   return (
-    <div ref={outerRef} className="lh-outer">
+    <div ref={outerRef} className={`lh-outer${webgl === false ? ' lh-outer--flat' : ''}`}>
       <div ref={stickyRef} className="lh-sticky">
-        <canvas ref={canvasRef} className="lh-canvas" />
+        {/* Kept mounted until we know: the ref has to exist for three.js to
+            attach to. Dropped entirely once we know there is no context. */}
+        {webgl !== false && <canvas ref={canvasRef} className="lh-canvas" />}
 
         <div className="lh-content">
           <p className="lh-eyebrow">Sambhav</p>

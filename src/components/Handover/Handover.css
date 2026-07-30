@@ -191,9 +191,14 @@
   object-fit: cover;
 }
 
-/* Two tall anchors so the grid does not read as a uniform contact sheet. */
+/* Six tiles over a four column grid. Tile 0 anchors as a 2x2 block so the
+   mosaic does not read as a uniform contact sheet, and tiles 3, 4 and 5 span two
+   columns each so every row fills completely with no hole in the bottom right.
+   Rows: [0 0 1 2] / [0 0 3 3] / [4 4 5 5]. */
 .handover__tile--0 { grid-column: span 2; grid-row: span 2; }
 .handover__tile--3 { grid-column: span 2; }
+.handover__tile--4 { grid-column: span 2; }
+.handover__tile--5 { grid-column: span 2; }
 
 /* ── Remaining clips ──────────────────────────────────────────────────────── */
 .handover__subhead {
@@ -236,5 +241,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .handover__tile--0 { grid-column: span 2; grid-row: span 1; }
-  .handover__tile--3 { grid-column: span 2; }
+  .handover__tile--3,
+  .handover__tile--4,
+  .handover__tile--5 { grid-column: span 2; }
 }

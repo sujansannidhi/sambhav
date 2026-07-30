@@ -3,6 +3,7 @@ import ScrollReveal from '../components/ScrollReveal/ScrollReveal'
 import JaliDivider from '../components/JaliDivider/JaliDivider'
 import { Suspense, lazy } from 'react'
 import HeroCarousel from '../components/HeroCarousel/HeroCarousel'
+import SectionBoundary from '../components/SectionBoundary/SectionBoundary'
 import PromoVideo from '../components/PromoVideo/PromoVideo'
 import ImpactCounters from '../components/ImpactCounters/ImpactCounters'
 import useDocumentTitle from '../hooks/useDocumentTitle'
@@ -159,12 +160,19 @@ export default function Home() {
       {/* ── LEARN / EMPOWER / TRANSFORM ───────────────────── */}
       {/* Height is inline, not via .lh-outer: that class lives in
           LearningHero.css, which now ships inside the lazy chunk and is not
-          present while the fallback is on screen. */}
-      <Suspense
-        fallback={<div style={{ height: '300vh', background: 'var(--indigo-2)' }} aria-hidden="true" />}
+          present while the fallback is on screen.
+          The boundary matters: LearningHero drives WebGL, and a failed context
+          used to throw during its effect and blank the whole page. */}
+      <SectionBoundary
+        name="LearningHero"
+        fallback={<div style={{ height: '40vh', background: 'var(--indigo-2)' }} aria-hidden="true" />}
       >
-        <LearningHero />
-      </Suspense>
+        <Suspense
+          fallback={<div style={{ height: '300vh', background: 'var(--indigo-2)' }} aria-hidden="true" />}
+        >
+          <LearningHero />
+        </Suspense>
+      </SectionBoundary>
 
       <JaliDivider />
 

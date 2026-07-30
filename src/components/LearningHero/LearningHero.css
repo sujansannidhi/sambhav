@@ -105,3 +105,16 @@
   background: var(--saffron);
   transform: scale(1.4);
 }
+
+/* Scene-free variant, used when a WebGL context cannot be created (GPU
+   blocklist, WebGL switched off, some VMs). The words and their lines still
+   read; only the star field and mountains are gone. */
+.lh-outer--flat {
+  background: var(--indigo-2);
+}
+
+.lh-outer--flat .lh-sticky {
+  background:
+    radial-gradient(ellipse at 50% 85%, rgba(233, 162, 59, 0.16) 0%, transparent 60%),
+    linear-gradient(to bottom, #0d1526 0%, var(--indigo-2) 55%, #1c2a48 100%);
+}
