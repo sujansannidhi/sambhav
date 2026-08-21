@@ -1,33 +1,37 @@
 .mcar {
   position: relative;
   margin-top: 2rem;
-  /* Belt and braces alongside min-width:0 on the parent column: the carousel
-     must never be wider than the column it sits in. */
+  /* Never wider than the column it sits in. Paired with min-width: 0 on the
+     parent grid item, which is what actually lets overflow-x work. */
   min-width: 0;
-  max-width: 100%;
+  max-width: 780px;
 }
 
 .mcar__track {
   display: flex;
-  gap: 1.25rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 0 0 1.25rem;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  border-radius: var(--radius);
+}
+
+/* One sheet at a time: no visible scrollbar, the buttons and swipe drive it. */
+.mcar__track::-webkit-scrollbar {
+  display: none;
 }
 
 .mcar__track:focus-visible {
-  /* Inset, because an outset ring would be clipped by overflow-x: auto. */
   outline: 3px solid var(--saffron);
   outline-offset: -3px;
-  border-radius: var(--radius-sm);
 }
 
+/* Full width slides are what make exactly one document visible at any moment. */
 .mcar__item {
-  flex: 0 0 auto;
-  width: clamp(210px, 26vw, 320px);
+  flex: 0 0 100%;
+  width: 100%;
   margin: 0;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .mcar__item picture {
@@ -37,50 +41,36 @@
 .mcar__item img {
   display: block;
   width: 100%;
-  height: clamp(300px, 34vw, 420px);
-  /* contain, not cover: these are documents meant to be read, and cover was
-     slicing the top and bottom off every sheet. The paper ground makes the
-     letterboxing read as a page rather than a gap. */
+  height: clamp(340px, 46vw, 560px);
+  /* contain, so a whole sheet is readable rather than cropped. Transparent
+     ground means the bands from mixed aspect ratios vanish into the page. */
   object-fit: contain;
-  /* Transparent, not white: the sheets are photographed at different aspect
-     ratios, so `contain` leaves bands above and below the landscape ones. On the
-     cream page those bands simply disappear, where a white card would frame
-     them as empty space. The photographs carry their own desk background, so
-     they still read as objects rather than floating cutouts. */
   background: transparent;
   border-radius: var(--radius-sm);
 }
 
-.mcar__item {
-  display: flex;
-  flex-direction: column;
-}
-
 .mcar__caption {
-  margin-top: 0.75rem;
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
   color: var(--ink-soft);
-  /* Captions vary from one line to four. Clamping keeps every card the same
-     height so the strip does not look ragged. */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  overflow: hidden;
+  max-width: 68ch;
+  /* Reserve two lines so the controls do not jump as captions change length. */
+  min-height: 2.8em;
 }
 
 .mcar__controls {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .mcar__btn {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 1.5px solid var(--indigo);
   background: transparent;
@@ -104,10 +94,28 @@
   outline-offset: 2px;
 }
 
-/* On a dark section the controls and captions have to invert. */
-.section--dark .mcar__caption,
-.imap-static .mcar__caption {
-  color: rgba(251, 246, 238, 0.7);
+.mcar__count {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+.mcar__count-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.mcar__count-sep {
+  margin: 0 0.35rem;
+  opacity: 0.5;
+}
+
+/* Dark sections invert the controls and caption. */
+.section--dark .mcar__caption {
+  color: rgba(251, 246, 238, 0.72);
 }
 
 .section--dark .mcar__btn {

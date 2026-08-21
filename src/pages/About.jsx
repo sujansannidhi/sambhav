@@ -4,12 +4,15 @@ import JaliDivider from '../components/JaliDivider/JaliDivider'
 import useDocumentTitle from '../hooks/useDocumentTitle'
 import './Home.css'
 
-const VALUES = [
-  { title: 'Transparency first', body: 'Every rupee is accounted for with a receipt. Every delivery is photographed. Nothing is hidden.' },
-  { title: 'Direct, not distant', body: 'We buy in person. We deliver in person. No third-party chains, no opaque logistics.' },
-  { title: 'Local knowledge', body: 'Buying at a wholesale shop in the same district brought the cost of a kit to about $3.50. No importing, no retail markup.' },
-  { title: 'Start small, do it right', body: "One program at a time. We won't launch the next until this one is airtight." },
+/* The team, beneath the founder's story. One entry for now: add to this array
+ * as people join rather than editing the markup. */
+const TEAM = [
+  { name: 'Praneel Rondla', role: 'Vice-president' },
 ]
+
+/* [CONFIG] Google Form for leadership applications. */
+const LEADERSHIP_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLScFb3Q3Vd-UqxW7qpYSXPa3olm_9Y_5O5BC9fBMbolgBwmNSw/viewform'
 
 export default function About() {
   useDocumentTitle(
@@ -76,25 +79,48 @@ export default function About() {
 
       <JaliDivider />
 
-      {/* ── VALUES ────────────────────────────────────────── */}
+      {/* ── TEAM ──────────────────────────────────────────── */}
       <section className="section section--paper">
         <div className="container">
           <ScrollReveal>
-            <p className="eyebrow">What we stand for</p>
-            <h2 className="mission__heading">Built on a short list of hard rules.</h2>
+            <p className="eyebrow">The team</p>
+            <h2 className="mission__heading">Who runs Sambhav.</h2>
           </ScrollReveal>
-          <div className="grid-2" style={{ marginTop: '2.5rem' }}>
-            {VALUES.map((v, i) => (
-              <ScrollReveal key={v.title} delay={(i % 2) + 1}>
-                <div className="card">
-                  <div className="card__body">
-                    <h3 className="card__title">{v.title}</h3>
-                    <p className="card__text">{v.body}</p>
-                  </div>
+
+          <div className="team">
+            {TEAM.map((m, i) => (
+              <ScrollReveal key={m.name} delay={i + 1}>
+                <div className="team__card">
+                  {/* Initials rather than a placeholder silhouette: we do not
+                      have photographs for everyone, and a fake avatar is worse
+                      than none. */}
+                  <span className="team__initials" aria-hidden="true">
+                    {m.name.split(' ').map((w) => w[0]).join('')}
+                  </span>
+                  <h3 className="team__name">{m.name}</h3>
+                  <p className="team__role">{m.role}</p>
                 </div>
               </ScrollReveal>
             ))}
           </div>
+
+          <ScrollReveal delay={2}>
+            <div className="team__apply">
+              <h3 className="team__apply-title">Apply for a leadership position</h3>
+              <p className="team__apply-body">
+                We are building the team out. If you want to help run Sambhav
+                rather than just support it, the application is open.
+              </p>
+              <a
+                className="btn btn--primary"
+                href={LEADERSHIP_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apply for a leadership position
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

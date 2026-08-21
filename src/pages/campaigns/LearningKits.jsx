@@ -336,20 +336,23 @@ export default function LearningKits() {
         <div className="container" style={{ textAlign: 'center' }}>
           <ScrollReveal>
             <h2 style={{ color: 'var(--cream)', marginBottom: '1rem' }}>
-              Run this at your school.
+              Run Learning Kits in your own hometown.
             </h2>
             <p
               style={{
-                color: 'rgba(251,246,238,0.65)',
+                color: 'rgba(251,246,238,0.72)',
                 marginBottom: '2rem',
-                maxWidth: '46ch',
+                maxWidth: '54ch',
                 marginInline: 'auto',
               }}
             >
-              A chapter runs the same way: ask the teachers, band by grade, buy
-              local, pack by hand, deliver in person.
+              This is not only for chapters, and it is not only for India. Learning
+              Kits works anywhere there are schools going short: your hometown, or
+              a school district here in America. The method does not change. Ask the
+              teachers what they need, split it out grade by grade, buy it local,
+              pack it by hand, and put it in a student's hands yourself.
             </p>
-            <Link to="/start" className="btn btn--primary">Start a Chapter</Link>
+            <Link to="/start" className="btn btn--primary">Run a Learning Kits project</Link>
           </ScrollReveal>
         </div>
       </section>

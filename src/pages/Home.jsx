@@ -6,6 +6,7 @@ import HeroCarousel from '../components/HeroCarousel/HeroCarousel'
 import SectionBoundary from '../components/SectionBoundary/SectionBoundary'
 import PromoVideo from '../components/PromoVideo/PromoVideo'
 import ImpactCounters from '../components/ImpactCounters/ImpactCounters'
+import DonateSection from '../components/DonateSection/DonateSection'
 import useDocumentTitle from '../hooks/useDocumentTitle'
 import './Home.css'
 
@@ -14,6 +15,55 @@ import './Home.css'
  * that cost off the critical path. The placeholder reserves the same 300vh the
  * real section occupies, so nothing shifts when it swaps in. */
 const LearningHero = lazy(() => import('../components/LearningHero/LearningHero'))
+
+/* The three barriers Sambhav works on.
+ *
+ * Access, resources and instruction. Only the resources column describes work
+ * that is actually running: Learning Kits. The other two say what the barrier is
+ * without claiming a programme that does not exist yet, which keeps this honest
+ * against the organisation's own record. */
+const BARRIERS = [
+  {
+    title: 'Access',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
+        <path d="M3 21h18" />
+        <path d="M5 21V8l7-5 7 5v13" />
+        <path d="M10 21v-6h4v6" />
+      </svg>
+    ),
+    problem:
+      'Whether a child reaches a classroom at all depends on where they were born, what their family can afford, and how far the walk is.',
+    answer:
+      'We work through government schools that are already there, rather than building anything parallel to them.',
+  },
+  {
+    title: 'Resources',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+    ),
+    problem:
+      'A student can be enrolled and present and still have nothing to write in. The state kit arrives, then runs out partway through the year.',
+    answer:
+      'Learning Kits. Teachers say what each grade is short of, we buy it at local wholesale prices and hand it over in person.',
+  },
+  {
+    title: 'Instruction',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
+        <path d="M12 3 2 8l10 5 10-5-10-5Z" />
+        <path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5" />
+      </svg>
+    ),
+    problem:
+      'Materials are the floor, not the ceiling. Exam preparation and one-to-one help are what carry a student through the years that decide their path.',
+    answer:
+      'Volunteer teaching and exam preparation are the direction we are building toward, and are not running yet.',
+  },
+]
 
 /* Ways to get involved. The homepage's job is to route people to an action. */
 const PATHS = [
@@ -63,12 +113,8 @@ export default function Home() {
         </div>
 
         <div className="container hero__content">
-          <p className="eyebrow eyebrow--light">Making opportunity possible</p>
-          <p className="hero__sub">
-            Opportunity shouldn't depend on where you're born. Sambhav removes
-            the small barriers that stop people from thriving, starting with
-            the basics every child deserves.
-          </p>
+          {/* The eyebrow and standfirst were removed at the client's request.
+              The wordmark and the two actions carry the hero on their own. */}
           <div className="hero__ctas">
             <Link to="/start" className="btn btn--primary">
               Start a Chapter
@@ -98,62 +144,34 @@ export default function Home() {
       {/* ── IMPACT COUNTERS ──────────────────────────────── */}
       <ImpactCounters />
 
-      {/* ── MISSION TEASER ───────────────────────────────── */}
+      {/* ── THE BARRIERS ─────────────────────────────────── */}
       <section id="mission" className="section section--cream">
         <div className="container">
           <ScrollReveal>
-            <p className="eyebrow">What we aim to achieve</p>
-            <h2 className="mission__heading">We find the gaps. We fill them.</h2>
+            <p className="eyebrow">What stands in the way</p>
+            <h2 className="mission__heading">Three barriers, not one.</h2>
             <p className="mission__intro">
-              Millions of young people face barriers that have nothing to do with
-              their intelligence or determination. Sambhav, a word that roughly
-              translates to "possible", exists to close that gap, starting with
-              school supplies for students who need them most.
+              A student who wants to learn can still be stopped by things that have
+              nothing to do with them. These are the three we work on, and Learning
+              Kits is where we started.
             </p>
           </ScrollReveal>
 
-          <div className="grid-3 mission__pillars">
-            <ScrollReveal delay={1}>
-              <div className="pillar">
-                <span className="pillar__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" width="28" height="28">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                  </svg>
-                </span>
-                <h3 className="pillar__title">Education</h3>
-                <p className="pillar__body">
-                  School supplies, notebooks, and learning materials delivered directly
-                  to students in under-resourced government schools.
-                </p>
-                <span className="pillar__label pillar__label--active">Active</span>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={2}>
-              <div className="pillar pillar--blank">
-                <span className="pillar__blank-dot" />
-                <span className="pillar__blank-dot" />
-                <span className="pillar__blank-dot" />
-                <span className="pillar__label">More coming</span>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={3}>
-              <div className="pillar pillar--blank">
-                <span className="pillar__blank-dot" />
-                <span className="pillar__blank-dot" />
-                <span className="pillar__blank-dot" />
-                <span className="pillar__label">More coming</span>
-              </div>
-            </ScrollReveal>
+          <div className="grid-3 barriers">
+            {BARRIERS.map((b, i) => (
+              <ScrollReveal key={b.title} delay={i + 1}>
+                <div className="barrier">
+                  <span className="barrier__icon" aria-hidden="true">{b.icon}</span>
+                  <h3 className="barrier__title">{b.title}</h3>
+                  <p className="barrier__problem">{b.problem}</p>
+                  <p className="barrier__answer">
+                    <span className="barrier__answer-label">What we do</span>
+                    {b.answer}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
-
-          <ScrollReveal>
-            <Link to="/mission" className="btn btn--outline-dark" style={{ marginTop: '2.5rem', display: 'inline-flex' }}>
-              Read our mission →
-            </Link>
-          </ScrollReveal>
         </div>
       </section>
 
@@ -201,6 +219,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── GIVING ────────────────────────────────────────── */}
+      <DonateSection />
 
       {/* ── CLOSING CTA ───────────────────────────────────── */}
       <section className="section section--indigo">

@@ -4,13 +4,6 @@ import JaliDivider from '../components/JaliDivider/JaliDivider'
 import useDocumentTitle from '../hooks/useDocumentTitle'
 import './Home.css'
 
-const STEPS = [
-  { n: '01', t: 'Go in person', b: 'A team member visits the wholesale shop in person. No remote purchasing, no third-party fulfilment.' },
-  { n: '02', t: 'Buy wholesale, locally', b: 'A local wholesale shop that specialises in school supplies brought the cost to about $3.50 a kit on the June 2026 run.' },
-  { n: '03', t: 'Deliver directly', b: 'Supplies go to government schools through a verified on-the-ground partner, not a distribution chain.' },
-  { n: '04', t: 'Document everything', b: 'Receipts, photos, and a signed letter from the school. Every campaign, every time.' },
-]
-
 export default function Mission() {
   useDocumentTitle(
     'Mission | Sambhav',
@@ -90,30 +83,6 @@ export default function Mission() {
       <JaliDivider />
 
       {/* ── HOW THE DRIVE WORKS ───────────────────────────── */}
-      <section className="section section--paper">
-        <div className="container">
-          <ScrollReveal>
-            <p className="eyebrow">How it works</p>
-            <h2 className="mission__heading" style={{ maxWidth: '28ch' }}>
-              Direct. Documented. No middlemen.
-            </h2>
-          </ScrollReveal>
-          <div className="grid-4" style={{ marginTop: '2.5rem' }}>
-            {STEPS.map((s, i) => (
-              <ScrollReveal key={s.n} delay={i + 1}>
-                <div className="card">
-                  <div className="card__body">
-                    <p className="eyebrow">{s.n}</p>
-                    <h3 className="card__title">{s.t}</h3>
-                    <p className="card__text">{s.b}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA ───────────────────────────────────────────── */}
       <section className="section section--indigo">
         <div className="container" style={{ textAlign: 'center' }}>

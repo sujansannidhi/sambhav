@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import markColour from '../../assets/brand/sambhav-mark.svg'
 import markLight from '../../assets/brand/sambhav-mark-light.svg'
 import './Header.css'
@@ -11,15 +11,9 @@ const NAV_LINKS = [
   { to: '/partnerships', label: 'Partnerships' },
 ]
 
-/* Campaigns. Only Learning Kits is running. Teaching and Access appear here
- * marked as planned rather than hidden: they are not links, cannot be focused,
- * and are flagged aria-disabled so assistive tech announces them as unavailable.
- */
-const CAMPAIGNS = [
-  { to: '/campaigns/learning-kits', label: 'Learning Kits', status: 'active' },
-  { label: 'Teaching', status: 'planned' },
-  { label: 'Access', status: 'planned' },
-]
+/* Campaigns. Teaching and Access were removed at the client's request, leaving
+ * Learning Kits as the only campaign. A dropdown holding one item is worse than
+ * a link, so "Campaigns" now navigates straight to it. */
 
 const WORDMARK = 'Sambhav'
 const ANIM_KEY = 'sambhav:wordmark-played'
@@ -54,140 +48,6 @@ function Wordmark() {
         </span>
       ))}
     </span>
-  )
-}
-
-function CampaignsMenu({ onNavigate }) {
-  const [open, setOpen] = useState(false)
-  const triggerRef = useRef(null)
-  const menuRef = useRef(null)
-  const wrapRef = useRef(null)
-  const { pathname } = useLocation()
-
-  const focusable = () => Array.from(menuRef.current?.querySelectorAll('a[href]') || [])
-
-  const close = useCallback((returnFocus = false) => {
-    setOpen(false)
-    if (returnFocus) triggerRef.current?.focus()
-  }, [])
-
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation()
-        close(true)
-      }
-    }
-    const onPointer = (e) => {
-      if (!wrapRef.current?.contains(e.target)) close()
-    }
-    document.addEventListener('keydown', onKey)
-    document.addEventListener('pointerdown', onPointer)
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.removeEventListener('pointerdown', onPointer)
-    }
-  }, [open, close])
-
-  const onTriggerKey = (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      setOpen(true)
-      requestAnimationFrame(() => focusable()[0]?.focus())
-    }
-  }
-
-  /* Arrow keys walk the real links only. Planned items are not anchors, so they
-     are skipped for free. */
-  const onMenuKey = (e) => {
-    const items = focusable()
-    const i = items.indexOf(document.activeElement)
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      items[(i + 1) % items.length]?.focus()
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      if (i <= 0) close(true)
-      else items[i - 1].focus()
-    } else if (e.key === 'Home') {
-      e.preventDefault()
-      items[0]?.focus()
-    } else if (e.key === 'End') {
-      e.preventDefault()
-      items[items.length - 1]?.focus()
-    } else if (e.key === 'Tab') {
-      close()
-    }
-  }
-
-  const isActive = pathname.startsWith('/campaigns')
-
-  return (
-    <div className="header__menu" ref={wrapRef}>
-      <button
-        ref={triggerRef}
-        type="button"
-        className={`header__nav-link header__menu-trigger${isActive ? ' header__nav-link--active' : ''}`}
-        aria-expanded={open}
-        aria-controls="campaigns-menu"
-        aria-haspopup="true"
-        /* On touch the first tap opens the menu instead of navigating. */
-        onClick={() => setOpen((v) => !v)}
-        onKeyDown={onTriggerKey}
-      >
-        Campaigns
-        <svg
-          className="header__menu-caret"
-          viewBox="0 0 24 24"
-          width="14"
-          height="14"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          aria-hidden="true"
-        >
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </button>
-
-      <div
-        id="campaigns-menu"
-        ref={menuRef}
-        className={`header__dropdown${open ? ' header__dropdown--open' : ''}`}
-        onKeyDown={onMenuKey}
-        hidden={!open}
-      >
-        <ul>
-          {CAMPAIGNS.map((c) =>
-            c.status === 'active' ? (
-              <li key={c.label}>
-                <NavLink
-                  to={c.to}
-                  className="header__dropdown-item"
-                  onClick={() => {
-                    close()
-                    onNavigate?.()
-                  }}
-                >
-                  {c.label}
-                </NavLink>
-              </li>
-            ) : (
-              <li key={c.label}>
-                <span
-                  className="header__dropdown-item header__dropdown-item--planned"
-                  aria-disabled="true"
-                >
-                  {c.label}
-                  <span className="header__planned-tag">Planned</span>
-                </span>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
-    </div>
   )
 }
 
@@ -232,7 +92,9 @@ export default function Header() {
         </Link>
 
         <nav className="header__nav" aria-label="Main navigation">
-          <CampaignsMenu onNavigate={closeMenu} />
+          <NavLink to="/campaigns/learning-kits" className="header__nav-link" onClick={closeMenu}>
+            Campaigns
+          </NavLink>
           {NAV_LINKS.map(({ to, label }) => (
             <NavLink key={to} to={to} className="header__nav-link" onClick={closeMenu}>
               {label}
@@ -271,14 +133,8 @@ export default function Header() {
       >
         <nav aria-label="Mobile navigation">
           <NavLink to="/campaigns/learning-kits" className="header__mobile-link" onClick={closeMenu}>
-            Learning Kits
+            Campaigns
           </NavLink>
-          <span className="header__mobile-link header__mobile-link--planned" aria-disabled="true">
-            Teaching <span className="header__planned-tag">Planned</span>
-          </span>
-          <span className="header__mobile-link header__mobile-link--planned" aria-disabled="true">
-            Access <span className="header__planned-tag">Planned</span>
-          </span>
           {NAV_LINKS.map(({ to, label }) => (
             <NavLink key={to} to={to} className="header__mobile-link" onClick={closeMenu}>
               {label}

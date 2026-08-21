@@ -1,0 +1,104 @@
+.give {
+  background: var(--indigo-2);
+  color: var(--cream);
+  padding: clamp(3.5rem, 9vw, 6.5rem) 0;
+}
+
+.give__inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+/* Both columns must be able to shrink: the iframe has an intrinsic width and
+   would otherwise blow the grid past the container. */
+.give__text,
+.give__widget {
+  min-width: 0;
+}
+
+.give__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0 1rem;
+  max-width: 18ch;
+}
+
+.give__body {
+  color: rgba(251, 246, 238, 0.78);
+  line-height: 1.7;
+  max-width: 60ch;
+  margin: 0 0 1.5rem;
+}
+
+.give__list {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.give__list li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin-bottom: 0.6rem;
+  color: rgba(251, 246, 238, 0.78);
+  line-height: 1.55;
+  max-width: 56ch;
+}
+
+.give__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--saffron);
+}
+
+.give__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.give__disclaimer {
+  margin: 1.5rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  /* Kept at 0.66 alpha rather than lower: this is the legal line and it has to
+     clear 4.5:1 against --indigo-2. */
+  color: rgba(251, 246, 238, 0.66);
+  max-width: 56ch;
+}
+
+/* Centres the embed in its column. The cream card that used to wrap this was
+   removed: the GoFundMe widget already draws its own white card, so the wrapper
+   was just a frame of empty space around it. */
+.give__widget {
+  display: flex;
+  justify-content: center;
+}
+
+/* The widget's card is a fixed 199px tall at every width from 360 to 560px.
+   The iframe used to be 380px, so the extra 180px showed GoFundMe's own blank
+   page below the card, and at that height their cookie banner started to creep
+   into view. Sizing the frame to the card removes both. */
+.give__widget iframe {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: 200px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.42);
+}
+
+@media (max-width: 860px) {
+  .give__inner {
+    grid-template-columns: 1fr;
+  }
+}

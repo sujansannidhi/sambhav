@@ -2,25 +2,24 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Picture from '../Picture/Picture'
 import './MediaCarousel.css'
 
-/* A horizontally scrollable strip of images.
+/* A one-at-a-time viewer for a set of document scans.
  *
- * Unlike the hero, this one IS a gallery, so it gets real controls: arrows, a
- * keyboard-reachable scroll container, and a caption per item. It is built on
- * native scroll with scroll-snap rather than a transform track, which means the
- * trackpad, a touch swipe, shift+wheel and the arrow keys all work with no
- * extra code and nothing is hijacked.
+ * Exactly one sheet is on screen at any moment. It is still built on native
+ * scroll with scroll-snap rather than a transform track, so a touch swipe, a
+ * trackpad and the arrow keys all work without any custom gesture handling and
+ * nothing is hijacked. The buttons just scroll the container by one slide.
  */
-export default function MediaCarousel({ items, label, sizes = '(max-width: 760px) 78vw, 340px' }) {
+export default function MediaCarousel({ items, label, sizes = '(max-width: 860px) 92vw, 720px' }) {
   const trackRef = useRef(null)
-  const [atStart, setAtStart] = useState(true)
-  const [atEnd, setAtEnd] = useState(false)
+  const [index, setIndex] = useState(0)
 
   const update = useCallback(() => {
     const el = trackRef.current
     if (!el) return
-    setAtStart(el.scrollLeft <= 4)
-    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4)
-  }, [])
+    const slide = el.firstElementChild?.offsetWidth || el.clientWidth
+    /* Round to the nearest slide: snap can leave a sub-pixel offset. */
+    setIndex(Math.min(items.length - 1, Math.max(0, Math.round(el.scrollLeft / slide))))
+  }, [items.length])
 
   useEffect(() => {
     const el = trackRef.current
@@ -34,52 +33,71 @@ export default function MediaCarousel({ items, label, sizes = '(max-width: 760px
     }
   }, [update])
 
-  const nudge = (dir) => {
+  const goTo = (i) => {
     const el = trackRef.current
     if (!el) return
-    const step = el.querySelector('figure')?.offsetWidth ?? 320
-    el.scrollBy({ left: dir * (step + 20), behavior: 'smooth' })
+    const target = Math.min(items.length - 1, Math.max(0, i))
+    const slide = el.firstElementChild?.offsetWidth || el.clientWidth
+    el.scrollTo({ left: target * slide, behavior: 'smooth' })
+  }
+
+  const onKeyDown = (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1) }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(index - 1) }
+    else if (e.key === 'Home') { e.preventDefault(); goTo(0) }
+    else if (e.key === 'End') { e.preventDefault(); goTo(items.length - 1) }
   }
 
   if (!items?.length) return null
+
+  const current = items[index]
 
   return (
     <div className="mcar">
       <div
         className="mcar__track"
         ref={trackRef}
-        /* Focusable so the arrow keys reach it without a mouse. role="group"
-           keeps it announced as one unit rather than a list of stray images. */
         tabIndex={0}
         role="group"
         aria-label={label}
+        onKeyDown={onKeyDown}
       >
-        {items.map((img) => (
-          <figure className="mcar__item" key={img.slug}>
+        {items.map((img, i) => (
+          <figure className="mcar__item" key={img.slug} aria-hidden={i !== index}>
             <Picture img={img} sizes={sizes} />
-            <figcaption className="mcar__caption">{img.alt}</figcaption>
           </figure>
         ))}
       </div>
+
+      {/* Caption sits outside the track so it never scrolls with the sheets and
+          the height stays stable as they change. */}
+      <p className="mcar__caption" aria-live="polite">{current.alt}</p>
 
       <div className="mcar__controls">
         <button
           type="button"
           className="mcar__btn"
-          onClick={() => nudge(-1)}
-          disabled={atStart}
-          aria-label={`Scroll ${label} left`}
+          onClick={() => goTo(index - 1)}
+          disabled={index === 0}
+          aria-label={`Previous of ${items.length}`}
         >
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </button>
+
+        <p className="mcar__count">
+          <span className="mcar__count-current">{index + 1}</span>
+          <span className="mcar__count-sep">/</span>
+          {items.length}
+        </p>
+
         <button
           type="button"
           className="mcar__btn"
-          onClick={() => nudge(1)}
-          disabled={atEnd}
-          aria-label={`Scroll ${label} right`}
+          onClick={() => goTo(index + 1)}
+          disabled={index === items.length - 1}
+          aria-label={`Next of ${items.length}`}
         >
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
             <polyline points="9 18 15 12 9 6" />

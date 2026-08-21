@@ -64,21 +64,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.counter__detail {
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  margin: 0;
-  max-width: 34ch;
-}
-
-.counters__note {
-  margin-top: 2.75rem;
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-  max-width: 62ch;
-}
-
 @media (max-width: 860px) {
   .counters__grid {
     grid-template-columns: 1fr;

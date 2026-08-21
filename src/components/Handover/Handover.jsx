@@ -29,6 +29,9 @@ function VideoCard({ video, feature = false }) {
     requestAnimationFrame(() => ref.current?.play())
   }
 
+  /* Captions were removed at the client's request. The description still
+     reaches assistive tech through the play button's aria-label below, so
+     nothing is lost for screen reader users. */
   return (
     <figure className={`hv${feature ? ' hv--feature' : ''}`}>
       <div className="hv__frame">
@@ -65,7 +68,6 @@ function VideoCard({ video, feature = false }) {
           </button>
         )}
       </div>
-      <figcaption className="hv__caption">{video.alt}</figcaption>
     </figure>
   )
 }
@@ -95,24 +97,6 @@ export default function Handover() {
           </div>
         </ScrollReveal>
 
-        {/* The three facts the document actually records about the day */}
-        <ScrollReveal delay={1}>
-          <dl className="handover__facts">
-            <div>
-              <dt>2 days</dt>
-              <dd>23 and 24 June 2026</dd>
-            </div>
-            <div>
-              <dt>16 hours</dt>
-              <dd>of distribution across the two towns</dd>
-            </div>
-            <div>
-              <dt>5 hours</dt>
-              <dd>of packing before any of it moved</dd>
-            </div>
-          </dl>
-        </ScrollReveal>
-
         {/* Photo mosaic */}
         <ScrollReveal delay={1}>
           <div className="handover__mosaic">
@@ -134,10 +118,6 @@ export default function Handover() {
           </div>
         </ScrollReveal>
 
-        <p className="handover__note">
-          Filmed by the volunteers on the day. Nothing is staged and nothing is
-          re-enacted.
-        </p>
       </div>
     </section>
   )

@@ -162,94 +162,7 @@
   outline-offset: 2px;
 }
 
-/* ── Campaigns dropdown ───────────────────────────────────────────────────── */
-.header__menu {
-  position: relative;
-}
-
-.header__menu-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.header__menu-caret {
-  transition: transform 0.2s;
-}
-
-.header__menu-trigger[aria-expanded='true'] .header__menu-caret {
-  transform: rotate(180deg);
-}
-
-.header__dropdown {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  min-width: 230px;
-  background: var(--cream);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow);
-  padding: 0.4rem;
-  z-index: 10;
-}
-
-.header__dropdown ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.header__dropdown-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  border-radius: 6px;
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--ink);
-  text-decoration: none;
-  transition: background 0.15s;
-}
-
 a.header__dropdown-item:hover,
-a.header__dropdown-item:focus-visible {
-  background: rgba(36, 26, 20, 0.07);
-  outline: none;
-}
-
-a.header__dropdown-item:focus-visible {
-  box-shadow: inset 0 0 0 2px var(--saffron);
-}
-
-.header__dropdown-item--planned {
-  color: var(--ink-soft);
-  cursor: default;
-  opacity: 0.75;
-}
-
-.header__planned-tag {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--terra);
-  background: rgba(199, 81, 38, 0.10);
-  border: 1px solid rgba(199, 81, 38, 0.28);
-  border-radius: 99px;
-  padding: 0.1rem 0.45rem;
-  white-space: nowrap;
-}
-
 /* ── CTA buttons ──────────────────────────────────────────────────────────── */
 .header__cta {
   margin-left: 0.75rem;
@@ -365,17 +278,6 @@ a.header__dropdown-item:focus-visible {
   color: var(--saffron);
 }
 
-.header__mobile-link--planned {
-  color: rgba(251, 246, 238, 0.42);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.header__mobile-link--planned:hover {
-  color: rgba(251, 246, 238, 0.42);
-}
-
 .header__mobile-cta {
   margin-top: 2rem;
   align-self: flex-start;
@@ -387,19 +289,24 @@ a.header__dropdown-item:focus-visible {
   .header,
   .header__scrim,
   .header__mark-img,
-  .header__mobile-menu,
-  .header__menu-caret {
+  .header__mobile-menu {
     transition: none;
   }
 }
 
 @media (max-width: 768px) {
-  .header__nav,
-  .header__cta {
+  /* Scoped to .header on purpose. The CTAs also carry .btn, which sets
+     display: inline-flex in index.css. index.css is emitted AFTER this file in
+     the bundle, so at equal specificity .btn was winning: the buttons never hid
+     on phones, they overflowed the viewport, and they pushed the hamburger off
+     screen so the mobile menu could not be opened at all. The extra .header
+     raises specificity so cascade order stops mattering. */
+  .header .header__nav,
+  .header .header__cta {
     display: none;
   }
 
-  .header__hamburger {
+  .header .header__hamburger {
     display: flex;
   }
 }

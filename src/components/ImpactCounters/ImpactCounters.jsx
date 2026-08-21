@@ -19,6 +19,9 @@ import './ImpactCounters.css'
  * the client's request. It is still stated in prose on the Mission and About
  * pages, where it has room for the context that it is a wholesale unit price.
  *
+ * The per-figure detail lines and the closing note were removed at the client's
+ * request. The "as of" date stays: an undated figure reads as invented.
+ *
  * The labels are deliberately long. "Students who received a kit" is not the
  * same claim as "students enrolled at the schools we reached", and the site must
  * never let one be read as the other.
@@ -30,20 +33,17 @@ const FIGURES = [
     value: 12,
     display: '12',
     label: 'schools reached',
-    detail: 'Six in Narasaraopet, four named in Ammanabrolu, two more not yet named in our records.',
   },
   {
     value: 1200,
     display: '1,200',
     prefix: 'over ',
     label: 'students who received a kit',
-    detail: 'Counted as kits handed to a student, not as enrolment at the schools we visited.',
   },
   {
     value: 2,
     display: '2',
     label: 'towns reached',
-    detail: 'Narasaraopet in Palnadu district and Ammanabrolu in Prakasam district.',
   },
 ]
 
@@ -88,7 +88,6 @@ function Figure({ fig, animate }) {
       </p>
       <p className="counter__label">{fig.label}</p>
       <p className="counter__asof">{AS_OF}</p>
-      <p className="counter__detail">{fig.detail}</p>
     </div>
   )
 }
@@ -133,10 +132,6 @@ export default function ImpactCounters() {
             <Figure key={fig.label} fig={fig} animate={animate} />
           ))}
         </div>
-        <p className="counters__note">
-          Figures cover the June 2026 delivery run in Narasaraopet and Ammanabrolu.
-          They are three separate counts and are not added together.
-        </p>
       </div>
     </section>
   )
